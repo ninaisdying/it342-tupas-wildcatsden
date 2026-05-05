@@ -1,37 +1,37 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
  
-import { UserProvider, UserContext } from './features/admin/components/UserContext.jsx'; // Added UserContext import
+import { UserProvider, UserContext } from '../features/admin/components/UserContext.jsx'; // Added UserContext import
 import './App.css';
  
  
-import Homepage from "./layout/Homepage.js";
-import Dashboard from "./layout/Dashboard.js";
-import Footer from "./layout/Footer.jsx";
-import Header from "./layout/Header.jsx";
-import Bookings from "./features/booking/components/Bookings";
+import Homepage from "../layout/Homepage.jsx";
+import Dashboard from "../layout/Dashboard.jsx";
+import Footer from "../layout/Footer.jsx";
+import Header from "../layout/Header.jsx";
+import Bookings from "../features/booking/components/Bookings.jsx";
  
-import SignInModal from "./features/auth/components/SignInModal.jsx";
-import SignUpModal from "./features/auth/components/SignUpModal.jsx";
+import SignInModal from "../features/auth/components/SignInModal.jsx";
+import SignUpModal from "../features/auth/components/SignUpModal.jsx";
  
-import AccountPage from "./features/user/components/AccountPage.jsx";
-import EditAccountPage from "./features/user/components/EditAccountPage.jsx";
-import GuidePage from "./layout/GuidePage.js";
+import AccountPage from "../features/user/components/AccountPage.jsx";
+import EditAccountPage from "../features/user/components/EditAccountPage.jsx";
+import GuidePage from "../layout/GuidePage.jsx";
  
 // custodian components
-import CustodianVenues from './layout/CustodianVenues.js';
-import AddVenuePage from './layout/AddVenuePage.js';
- 
-import FAQ from "./layout/FAQ.js";
-import AdminRightSidebar from "./features/admin/components/AdminRightSidebar.jsx";
-import AdminDashboard from "./features/admin/components/AdminDashboard.jsx";
-import UserManagement from "./features/admin/components/UserManagement.jsx";
-import BookingRequests from "./features/booking/components/BookingRequests.jsx";
-import VenueOverview from "./features/venues/components/VenueOverview.jsx";
-import ProtectedAdminRoute from "./features/admin/components/ProtectedAdminRoute.jsx";
-import CustodianRightSidebar from "./layout/CustodianRightSidebar.js";
-import CustodianBookings from "./layout/CustodianBookings.js";
-import CustodianDashboard from "./layout/CustodianDashboard.js";
+import CustodianVenues from '../features/custodian/components/CustodianVenues.jsx';
+import AddVenuePage from '../features/custodian/components/AddVenuePage.jsx';
+
+import FAQ from "../layout/FAQ.jsx";
+import AdminRightSidebar from "../features/admin/components/AdminRightSidebar.jsx";
+import AdminDashboard from "../features/admin/components/AdminDashboard.jsx";
+import UserManagement from "../features/admin/components/UserManagement.jsx";
+import BookingRequests from "../features/booking/components/BookingRequests.jsx";
+import VenueOverview from "../features/venues/components/VenueOverview.jsx";
+import ProtectedAdminRoute from "../features/admin/components/ProtectedAdminRoute.jsx";
+import CustodianRightSidebar from "../features/custodian/components/CustodianRightSidebar.jsx";
+import CustodianBookings from "../features/custodian/components/CustodianBookings.jsx";
+import CustodianDashboard from "../features/custodian/components/CustodianDashboard.jsx";
  
 function AppContent() {
   const navigate = useNavigate();
