@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "./UserContext.jsx";
-import { bookingAPI } from "../api.js";
+import { bookingAPI } from "../api/api";
 import "../styles/BookingHistory.css";
 
 export default function BookingHistory() {

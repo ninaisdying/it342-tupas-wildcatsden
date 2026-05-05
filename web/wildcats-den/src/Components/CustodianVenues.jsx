@@ -4,7 +4,7 @@ import ManageVenues from "./ManageVenues.jsx";
 import AddVenueForm from "./AddVenueForm.jsx";
 import SearchBar from "./SearchBar.jsx";
 import CustodianNavigation from "./CustodianNavigation.jsx"; // Import custodian navigation
-import apiCall from "../api.js";
+import apiCall from "../api/api";
 import "../styles/CustodianVenues.css";
 import "../styles/AddVenueForm.css";
 import "../styles/DashboardRoutes.css";

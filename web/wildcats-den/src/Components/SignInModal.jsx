@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { UserContext } from "./UserContext.jsx";
-import { userAPI, authAPI } from "../api.js";
+import { userAPI, authAPI } from "../api/api";
 import "../styles/SignInModal.css";
 import CustomModal from "./CustomModal.jsx";
 import ChangePasswordModal from "./ChangePasswordModal.jsx";

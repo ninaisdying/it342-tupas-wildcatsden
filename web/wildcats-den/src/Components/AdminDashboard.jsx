@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useUser } from "./UserContext.jsx";
-import apiCall from "../api.js";
+import apiCall from "../api/api";
 
 import TotalUserCounts from "./TotalUserCounts.jsx";
 import UserManagementPreview from "./UserManagementPreview.jsx";
