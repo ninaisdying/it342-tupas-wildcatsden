@@ -3,38 +3,23 @@ package com.example.wildcatsden.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.wildcatsden.R
-
-data class Venue(
-    val id: Int,
-    val name: String,
-    val location: String,
-    val capacity: Int,
-    val imageResId: Int
-)
+import com.example.wildcatsden.data.Venue
 
 class VenueAdapter(
-    private val venues: List<Venue>,
-    private val onItemClick: (Venue) -> Unit
+    private val onItemClick: (Int) -> Unit
 ) : RecyclerView.Adapter<VenueAdapter.VenueViewHolder>() {
 
-    class VenueViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val imageVenue: ImageView = itemView.findViewById(R.id.imageVenueThumb)
-        private val textName: TextView = itemView.findViewById(R.id.textVenueName)
-        private val textLocation: TextView = itemView.findViewById(R.id.textVenueLocation)
-        private val textCapacity: TextView = itemView.findViewById(R.id.textVenueCapacity)
+    private var venues = listOf<Venue>()
 
-        fun bind(venue: Venue, onClick: (Venue) -> Unit) {
-            imageVenue.setImageResource(venue.imageResId)
-            textName.text = venue.name
-            textLocation.text = venue.location
-            textCapacity.text = "Capacity: ${venue.capacity} people"
-
-            itemView.setOnClickListener { onClick(venue) }
-        }
+    fun submitList(newList: List<Venue>) {
+        venues = newList
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VenueViewHolder {
@@ -44,8 +29,31 @@ class VenueAdapter(
     }
 
     override fun onBindViewHolder(holder: VenueViewHolder, position: Int) {
-        holder.bind(venues[position], onItemClick)
+        holder.bind(venues[position])
     }
 
     override fun getItemCount(): Int = venues.size
+
+    inner class VenueViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val venueImage: ImageView = itemView.findViewById(R.id.venueImage)
+        private val venueTitle: TextView = itemView.findViewById(R.id.venueTitle)
+        private val btnFavorite: ImageButton = itemView.findViewById(R.id.btnFavorite)
+
+        fun bind(venue: Venue) {
+            venueTitle.text = venue.venueName
+
+            Glide.with(itemView.context)
+                .load(venue.image)
+                .placeholder(R.drawable.ic_placeholder)
+                .into(venueImage)
+
+            itemView.setOnClickListener {
+                onItemClick(venue.venueId)
+            }
+
+            btnFavorite.setOnClickListener {
+                // Handle favorite toggle
+            }
+        }
+    }
 }
