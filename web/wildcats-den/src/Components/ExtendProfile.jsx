@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import "../styles/ExtendProfile.css";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "./UserContext.jsx";
-import { bookingAPI } from "../api.js";
+import { bookingAPI } from "../api/api";
 import CustomModal from "./CustomModal.jsx";
 
 export default function ExtendProfile({ isEditing, showSuccessModal, showErrorModal }) {

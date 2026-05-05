@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { UserContext } from "./UserContext.jsx";
-import apiCall from "../api.js";
+import apiCall from "../api/api";
 import "../styles/AddVenueForm.css";
 
 export default function AddVenueForm({ onVenueAdded }) {

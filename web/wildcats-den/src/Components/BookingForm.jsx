@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { bookingAPI } from "../api.js";
+import { bookingAPI } from "../api/api";
 import CustomModal from "./CustomModal.jsx";
 import "../styles/BookingForm.css";
 import { useUser } from "./UserContext.jsx";
