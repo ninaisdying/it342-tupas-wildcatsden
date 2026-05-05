@@ -82,6 +82,8 @@ class HomePage : AppCompatActivity(), SignInModal.SignInListener, SignUpModal.Si
 
             override fun onVenuesClick() {
                 Toast.makeText(this@HomePage, "Venues clicked", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this@HomePage, VenuesGridActivity::class.java)
+                startActivity(intent)
             }
 
             override fun onFaqClick() {

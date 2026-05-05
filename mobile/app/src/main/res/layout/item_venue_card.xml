@@ -3,62 +3,49 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginVertical="8dp"
+    android:layout_margin="8dp"
     app:cardCornerRadius="12dp"
-    app:cardElevation="4dp">
+    app:cardElevation="4dp"
+    app:cardUseCompatPadding="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="16dp">
+        android:orientation="vertical"
+        android:background="#FFFFFF">
 
-        <ImageView
-            android:id="@+id/imageVenueThumb"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/placeholder_venue"
-            android:radius="8dp" />
+        <!-- Image Container -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp">
 
-        <LinearLayout
-            android:layout_width="0dp"
+            <ImageView
+                android:id="@+id/venueImage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/about_image" />
+
+            <!-- Favorite Button -->
+            <ImageButton
+                android:id="@+id/btnFavorite"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_margin="12dp"
+                android:layout_alignParentEnd="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_heart_outline" />
+        </RelativeLayout>
+
+        <!-- Title -->
+        <TextView
+            android:id="@+id/venueTitle"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:layout_marginStart="16dp"
-            android:layout_gravity="center_vertical">
-
-            <TextView
-                android:id="@+id/textVenueName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Venue Name"
-                android:textColor="#7B282A"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="8dp" />
-
-            <TextView
-                android:id="@+id/textVenueLocation"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Building, Floor"
-                android:textColor="#666666"
-                android:textSize="14sp"
-                android:layout_marginBottom="8dp" />
-
-            <TextView
-                android:id="@+id/textVenueCapacity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Capacity: 100 people"
-                android:textColor="#E7C51D"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-
-        </LinearLayout>
+            android:padding="12dp"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="#7B282A" />
 
     </LinearLayout>
-
 </androidx.cardview.widget.CardView>
