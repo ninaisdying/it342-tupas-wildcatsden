@@ -1,11 +1,12 @@
 import React, { useContext, useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { UserContext } from "../features/admin/components/UserContext";
 import CustomModal from "../features/shared/components/CustomModal";
 import "./styles/Header.css";
 
 export default function Header({ isLoggedIn, onLogout, onSignInClick, onSignUpClick }) {
   const navigate = useNavigate();
+  const location = useLocation();
   const { logout, user } = useContext(UserContext);
 
   // Modal state
@@ -14,6 +15,11 @@ export default function Header({ isLoggedIn, onLogout, onSignInClick, onSignUpCl
   const [isHidden, setIsHidden] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [profilePhoto, setProfilePhoto] = useState("/images/default-profile.jpg");
+
+  // Check if current path matches
+  const isActive = (path) => {
+    return location.pathname === path ? "active" : "";
+  };
 
   React.useEffect(() => {
     const handleScroll = () => {
@@ -80,15 +86,19 @@ export default function Header({ isLoggedIn, onLogout, onSignInClick, onSignUpCl
     }
   };
 
-  // Check if user is a custodian - handle both cases
-  const isCustodian = user && (user.userType === 'CUSTODIAN' || user.userType === 'Custodian');
+  // Check if user is admin or custodian
+  const isAdmin = user?.role === "ADMIN" || user?.userType?.toLowerCase() === "admin";
+  const isCustodian = user?.userType?.toLowerCase() === 'custodian';
+  const canManageVenues = isAdmin || isCustodian;
 
   // Debug logging
   console.log('🔵 Header - Props isLoggedIn:', isLoggedIn);
   console.log('🔵 Header - Context user:', user);
-  console.log('🔵 Header - Context user ID:', user?.userId);
+  console.log('🔵 Header - User role:', user?.role);
   console.log('🔵 Header - User type:', user?.userType);
+  console.log('🔵 Header - Is admin:', isAdmin);
   console.log('🔵 Header - Is custodian:', isCustodian);
+  console.log('🔵 Header - Can manage venues:', canManageVenues);
   console.log('🔵 Header - Current profile photo:', profilePhoto);
 
   const handleLogout = () => {
@@ -111,8 +121,11 @@ export default function Header({ isLoggedIn, onLogout, onSignInClick, onSignUpCl
   };
 
   const handleVenuesNavigation = () => {
-    if (isCustodian) {
-      navigate("/custodian/dashboard");
+    if (isAdmin) {
+      // Admin goes to admin venues page
+      navigate("/admin/venues");
+    } else if (isCustodian) {
+      navigate("/custodian/my-venues");
     } else {
       navigate("/venues");
     }
@@ -139,14 +152,21 @@ export default function Header({ isLoggedIn, onLogout, onSignInClick, onSignUpCl
       </div>
 
       <nav className="nav-links">
-        <button className="nav-item" onClick={() => navigate("/")}>Home</button>
-        
-        {/* Show either "Venues" or "Manage Venues" based on user role */}
-        <button className="nav-item" onClick={handleVenuesNavigation}>
-          {isCustodian ? "Manage Venues" : "Venues"}
+        <button className={`nav-item ${isActive("/")}`} onClick={() => navigate("/")}>
+          Home
         </button>
         
-        <button className="nav-item" onClick={() => navigate("/faq")}>FAQ</button>
+        {/* Show either "Venues" or "Manage Venues" based on user role */}
+        <button 
+          className={`nav-item ${isAdmin ? isActive("/admin/venues") : isCustodian ? isActive("/custodian/dashboard") : isActive("/venues")}`}
+          onClick={handleVenuesNavigation}
+        >
+          {canManageVenues ? "Manage Venues" : "Venues"}
+        </button>
+        
+        <button className={`nav-item ${isActive("/faq")}`} onClick={() => navigate("/faq")}>
+          FAQ
+        </button>
       </nav>
 
       <div className="header-buttons">

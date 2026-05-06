@@ -65,20 +65,26 @@ export default function UserManagement() {
     }
   };
 
-  // SEACH & FILTER
-  const filteredUsers = users.filter((u) => {
-    const q = search.toLowerCase();
-    const matchSearch =
-      u.firstName.toLowerCase().includes(q) ||
-      u.lastName.toLowerCase().includes(q) ||
-      u.email.toLowerCase().includes(q);
+  // SEARCH & FILTER
+ const filteredUsers = users.filter((u) => {
+  const q = (search || "").toLowerCase();
 
-    const matchFilter =
-      filter === "All" ||
-      u.userType.toLowerCase() === filter.toLowerCase();
+  const firstName = (u.firstName || "").toLowerCase();
+  const lastName = (u.lastName || "").toLowerCase();
+  const email = (u.email || "").toLowerCase();
+  const userType = (u.userType || "").toLowerCase();
 
-    return matchSearch && matchFilter;
-  });
+  const matchSearch =
+    firstName.includes(q) ||
+    lastName.includes(q) ||
+    email.includes(q);
+
+  const matchFilter =
+    filter === "All" ||
+    userType === filter.toLowerCase();
+
+  return matchSearch && matchFilter;
+});
 
   // MULTI SELECT
   const toggleUser = (id) => {

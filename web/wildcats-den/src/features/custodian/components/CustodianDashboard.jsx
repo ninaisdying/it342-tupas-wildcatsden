@@ -113,17 +113,14 @@ const normalizeStatus = (status) => {
   let statusText = "pending";
   
   if (typeof status === 'boolean') {
-    // Handle legacy boolean status
     statusText = status ? "approved" : "pending";
   } else if (typeof status === 'string') {
-    // Handle string status - use lowercase for consistency
     statusText = status.toLowerCase();
   }
   
-  // Ensure status is one of the expected values
   const validStatuses = ["pending", "approved", "rejected", "canceled"];
   if (!validStatuses.includes(statusText)) {
-    statusText = "pending"; // Default to pending if invalid
+    statusText = "pending"; 
   }
   
   return statusText;
@@ -214,6 +211,30 @@ const normalizeStatus = (status) => {
         <h1>Custodian Dashboard</h1>
         <div className="welcome-message">
           Welcome, <span className="user-name">{user.firstName} {user.lastName}</span>
+        </div>
+      </div>
+
+       {/* Statistics Section */}
+      <div className="statistics">
+        <div className="stat-card" onClick={() => navigate("/custodian/my-venues")}>
+          <div className="stat-value">{myVenuesCount}</div>
+          <div className="stat-label">Total Venues</div>
+          <div className="stat-link">Manage Venues</div>
+        </div>
+        <div className="stat-card" onClick={() => navigate("/custodian/bookings")}>
+          <div className="stat-value">{todaysSchedule.length}</div>
+          <div className="stat-label">Today's Bookings</div>
+          <div className="stat-link">View Today</div>
+        </div>
+        <div className="stat-card" onClick={() => navigate("/custodian/bookings")}>
+          <div className="stat-value">{pendingBookings.length}</div>
+          <div className="stat-label">Pending</div>
+          <div className="stat-link">Review Now</div>
+        </div>
+        <div className="stat-card" onClick={() => navigate("/custodian/bookings")}>
+          <div className="stat-value">{approvedBookings.length}</div>
+          <div className="stat-label">Approved</div>
+          <div className="stat-link">Manage</div>
         </div>
       </div>
 
@@ -350,29 +371,6 @@ const normalizeStatus = (status) => {
         </div>
       </div>
 
-      {/* Statistics Section */}
-      <div className="statistics">
-        <div className="stat-card" onClick={() => navigate("/custodian/my-venues")}>
-          <div className="stat-value">{myVenuesCount}</div>
-          <div className="stat-label">Total Venues</div>
-          <div className="stat-link">Manage Venues</div>
-        </div>
-        <div className="stat-card" onClick={() => navigate("/custodian/bookings")}>
-          <div className="stat-value">{todaysSchedule.length}</div>
-          <div className="stat-label">Today's Bookings</div>
-          <div className="stat-link">View Today</div>
-        </div>
-        <div className="stat-card" onClick={() => navigate("/custodian/bookings")}>
-          <div className="stat-value">{pendingBookings.length}</div>
-          <div className="stat-label">Pending</div>
-          <div className="stat-link">Review Now</div>
-        </div>
-        <div className="stat-card" onClick={() => navigate("/custodian/bookings")}>
-          <div className="stat-value">{approvedBookings.length}</div>
-          <div className="stat-label">Approved</div>
-          <div className="stat-link">Manage</div>
-        </div>
-      </div>
     </div>
   );
 }

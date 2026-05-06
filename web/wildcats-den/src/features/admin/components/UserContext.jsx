@@ -168,10 +168,10 @@ export function UserProvider({ children }) {
   };
 
   // Helper function to check if user is custodian
-  const isCustodian = user && (user.userType === 'CUSTODIAN' || user.userType === 'Custodian');
+  const isCustodian = user && user.userType?.toLowerCase() === 'custodian';
 
   // Check if user is admin
-  const isAdmin = user && (user.userType === 'ADMIN' || user.userType === 'Admin');
+  const isAdmin = user && user.userType?.toLowerCase() === 'admin';
 
   return (
     <UserContext.Provider value={{ 

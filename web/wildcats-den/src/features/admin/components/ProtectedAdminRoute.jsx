@@ -18,7 +18,7 @@ export default function ProtectedAdminRoute({ children }) {
 
   if (checking || isLoading) return null;
 
-  if (!user || user.userType !== "Admin") {
+  if (!user || user?.userType?.toLowerCase() !== "admin") {
     return <Navigate to="/" replace />;
   }
 

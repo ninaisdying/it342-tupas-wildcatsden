@@ -1,0 +1,248 @@
+/* ===========================================
+   GLOBAL VARIABLES
+=========================================== */
+:root {
+  --red: #7B282A;
+  --yellow: #E7C51D;
+  --white: #F7F7F7;
+  --light-gray: #E6E6E6;
+  --muted: #6b7280;
+  --shadow: 0 3px 10px rgba(0,0,0,0.08);
+  --shadow-strong: 0 8px 20px rgba(0,0,0,0.08);
+}
+
+/* ===========================================
+   PAGE LAYOUT
+=========================================== */
+.vm-page {
+  padding: 35px 50px;
+}
+
+.vm-title {
+  font-size: 38px;
+  font-weight: 800;
+  color: var(--red);
+  margin-bottom: 25px;
+}
+
+/* ===========================================
+   CONTROLS
+=========================================== */
+.vm-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.vm-search {
+  padding: 12px 18px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  width: 100%;
+  max-width: 500px;
+}
+
+.vm-location-filter {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.vm-filter-btn {
+  padding: 8px 16px;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  background: white;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.vm-filter-btn.active {
+  background: var(--yellow);
+  color: white;
+  border-color: var(--yellow);
+}
+
+.vm-btn-add {
+  background: var(--yellow);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  width: fit-content;
+}
+
+/* ===========================================
+   TABLE
+=========================================== */
+.vm-table-container {
+  background: white;
+  padding: 20px;
+  margin: 20px 0;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  min-height: 450px;
+  overflow-x: auto;
+}
+
+.vm-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.vm-table th {
+  background: var(--red);
+  color: white;
+  padding: 12px;
+  text-align: left;
+  font-weight: 600;
+}
+
+.vm-table th:first-child,
+.vm-table td:first-child {
+  width: 70px;
+  max-width: 70px;
+  white-space: nowrap;
+}
+
+.vm-table td {
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+}
+
+.vm-table tr:hover {
+  background: #f7f2f2;
+}
+
+.vm-thumbnail {
+  width: 72px;
+  height: 54px;
+  object-fit: cover;
+  border-radius: 10px;
+  cursor: pointer;
+  border: 1px solid #ddd;
+}
+
+.vm-no-image {
+  width: 72px;
+  height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f1f1f1;
+  color: #777;
+  border-radius: 10px;
+  font-size: 0.8rem;
+}
+
+.vm-empty {
+  text-align: center;
+  padding: 40px 0;
+  color: #666;
+}
+
+.vm-description {
+  max-width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ===========================================
+   ACTION BUTTONS
+=========================================== */
+.vm-btn-edit {
+  background: #E7C51D;
+  color: white;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  margin-right: 8px;
+}
+
+.vm-btn-delete {
+  background: #b81414;
+  color: white;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+/* ===========================================
+   DELETE MODAL
+=========================================== */
+.vm-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem;
+  z-index: 2000;
+}
+
+.vm-modal-card {
+  width: 100%;
+  max-width: 360px;
+  background: var(--white);
+  border-radius: 14px;
+  padding: 2rem;
+  position: relative;
+  box-shadow: var(--shadow-strong);
+}
+
+.vm-modal-title {
+  color: var(--red);
+  margin: 0 0 1rem 0;
+  font-weight: 700;
+  font-size: 1.3rem;
+}
+
+.vm-close-btn {
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+  background: transparent;
+  border: none;
+  font-size: 1.3rem;
+  cursor: pointer;
+  color: var(--red);
+}
+
+.vm-modal-actions {
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.vm-btn-primary {
+  background: var(--red);
+  color: white;
+  border: none;
+  padding: 0.7rem 2rem;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.vm-btn-secondary {
+  background: #ccc;
+  color: black;
+  border: none;
+  padding: 0.7rem 2rem;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: 600;
+}

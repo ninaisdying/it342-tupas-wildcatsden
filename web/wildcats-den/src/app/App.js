@@ -7,7 +7,6 @@ import './App.css';
  
 import Homepage from "../layout/Homepage.jsx";
 import Dashboard from "../layout/Dashboard.jsx";
-import Footer from "../layout/Footer.jsx";
 import Header from "../layout/Header.jsx";
 import Bookings from "../features/booking/components/Bookings.jsx";
  
@@ -147,9 +146,7 @@ function AppContent() {
         </main>
       </div>
  
-      {/* FOOTER */}
-      <Footer />
- 
+   
       {/* SIGN IN MODAL */}
       {showSignIn && (
         <SignInModal

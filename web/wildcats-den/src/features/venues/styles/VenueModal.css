@@ -1,0 +1,203 @@
+:root {
+  --red: #7B282A;
+  --light-gray: #E6E6E6;
+  --white: #F7F7F7;
+  --muted: #6b7280;
+  --shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+
+/* ===========================
+   OVERLAY
+=========================== */
+.vmod-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.35);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+/* ===========================
+   MODAL CARD
+=========================== */
+.vmod-card {
+  background: #FFFFFF;
+  width: 100%;
+  max-width: 520px;
+  padding: 2rem;
+  border-radius: 14px;
+  position: relative;
+  box-shadow: var(--shadow);
+
+  max-height: 85vh;
+  overflow-y: auto;
+  scrollbar-gutter: stable both-edges;
+}
+
+.vmod-card::-webkit-scrollbar {
+  width: 8px;
+}
+
+.vmod-card::-webkit-scrollbar-thumb {
+  background: #d4d4d4;
+  border-radius: 10px;
+}
+
+/* CLOSE BUTTON */
+.vmod-close {
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.3rem;
+  cursor: pointer;
+  color: var(--red);
+}
+
+/* TITLE */
+.vmod-title {
+  color: var(--red);
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+/* ERROR */
+.vmod-error {
+  background: #ffe5e5;
+  color: #b30000;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+  border-left: 4px solid #b30000;
+}
+
+/* FORM */
+.vmod-form {
+  display: flex;
+  flex-direction: column;
+}
+
+/* LABEL */
+.vmod-label {
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin-top: 14px;
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+
+/* INPUT */
+.vmod-input {
+  background: var(--light-gray);
+  padding: 0.9rem 1rem;
+  border-radius: 999px;
+  border: none;
+  width: 100%;
+  outline: none;
+}
+
+/* DROPDOWN */
+.vmod-select {
+  background: var(--light-gray);
+  padding: 0.9rem 1rem;
+  border-radius: 999px;
+  border: none;
+  width: 100%;
+  outline: none;
+
+  /* Better arrow rendering */
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  padding-right: 45px;
+
+  background-image: url("data:image/svg+xml;utf8,<svg fill='%236b6b6b' height='16' width='16' xmlns='http://www.w3.org/2000/svg'><path d='M5 7l3 3 3-3'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 18px center;
+  background-size: 14px;
+
+  cursor: pointer;
+}
+
+.vmod-select:focus {
+  box-shadow: inset 0 0 0 2px rgba(123,40,42,0.18);
+}
+
+/* TEXTAREA */
+.vmod-textarea {
+  background: var(--light-gray);
+  padding: 1rem;
+  border-radius: 16px;
+  border: none;
+  resize: none;
+  min-height: 110px;
+}
+
+/* ACTIONS */
+.vmod-actions {
+  margin-top: 15px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+/* BUTTONS */
+.vmod-btn-primary {
+  background: var(--red);
+  color: white;
+  padding: 0.85rem 2.2rem;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.vmod-btn-secondary {
+  background: #ccc;
+  color: black;
+  padding: 0.85rem 2.2rem;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+}
+
+.vmod-image-upload-row {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 12px;
+  align-items: center;
+}
+
+.vmod-or-text {
+  font-size: 0.9rem;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.vmod-file-input {
+  border-radius: 999px;
+  padding: 0.85rem 1rem;
+  background: var(--light-gray);
+  border: none;
+  cursor: pointer;
+}
+
+.vmod-image-preview {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+.vmod-image-preview img {
+  width: 100%;
+  max-width: 320px;
+  border-radius: 16px;
+  object-fit: cover;
+  box-shadow: 0 10px 24px rgba(0,0,0,0.08);
+}
