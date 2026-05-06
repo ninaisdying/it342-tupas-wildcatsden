@@ -15,7 +15,7 @@ const Footer = () => {
             <h1 className="brand-name">Wildcat's DEN</h1>
           </div>
           <p className="brand-description">
-            Wildcat's DEN allows students, faculty, and organizers to book venues for org, campus, or networking events in Cebu Institute of Technology-University.
+            Wildcat's DEN is a Designated Events Navigator that allows students, faculty, and organizers to book venues for org, campus, or networking events in Cebu Institute of Technology-University.
           </p>
         </div>
 
