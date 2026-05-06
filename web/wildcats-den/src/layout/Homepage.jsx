@@ -1,5 +1,6 @@
 import React from "react";
 import "./styles/Homepage.css";
+import Footer from "../layout/Footer.jsx";
 import { useNavigate } from "react-router-dom";
 
 import HomepageVenueCarousel from "./HomepageVenueCarousel";
@@ -122,7 +123,10 @@ export default function Homepage() {
 
         <img src="/images/about-image.png" alt="CIT-U" className="discover-image" />
       </section>
-
+   
+   {/* FOOTER */}
+      <Footer />
+ 
     </div>
   );
 }
