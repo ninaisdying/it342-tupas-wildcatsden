@@ -41,6 +41,7 @@ export default function NotificationBar({ title, message, type, duration = 5000,
           }}
           aria-label="Close notification"
         >
+            
           ✕
         </button>
       </div>
