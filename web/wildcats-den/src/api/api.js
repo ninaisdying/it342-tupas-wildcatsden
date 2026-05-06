@@ -51,9 +51,33 @@ async function apiCall(endpoint, options = {}) {
   }
 }
 
-//Booking API
+//Notification API
+export const notificationAPI = {
+  // Get recent bookings for notifications (last 5 minutes)
+  getRecentBookings: (userId, userType) => {
+    return apiCall(`/notifications/recent-bookings?userId=${userId}&userType=${userType}`);
+  },
+  
+  // Get notifications for a user
+  getUserNotifications: (userId) => apiCall(`/notifications/user/${userId}`),
+
+  // Mark notification as read
+  markAsRead: (notificationId) => apiCall(`/notifications/${notificationId}/read`, {
+    method: 'PUT'
+  }),
+
+  // Clear all notifications for a user
+  clearAllNotifications: (userId) => apiCall(`/notifications/user/${userId}/clear-all`, {
+    method: 'DELETE'
+  }),
+  
+  // Get unread notifications count
+  getUnreadCount: (userId) => apiCall(`/notifications/unread-count/${userId}`)
+};
+
+// Booking API
 export const bookingAPI = {
-    createBooking: async (bookingData, userId) => {
+  createBooking: async (bookingData, userId) => {
     const response = await fetch(`${API_BASE_URL}/bookings?userId=${userId}`, {
       method: 'POST',
       headers: {
@@ -77,6 +101,23 @@ export const bookingAPI = {
       throw new Error('Failed to fetch bookings');
     }
     return await response.json();
+  },
+  
+  // Get bookings for custodian's venues
+  getCustodianBookings: async (custodianId) => {
+    const response = await fetch(`http://localhost:8080/api/bookings/custodian/${custodianId}`);
+    if (!response.ok) {
+      throw new Error('Failed to fetch custodian bookings');
+    }
+    return await response.json();
+  },
+  
+  // Update booking status (for custodian)
+  updateBookingStatus: async (bookingId, status) => {
+    return apiCall(`/bookings/${bookingId}/status`, {
+      method: 'PUT',
+      body: { status }
+    });
   }
 };
 

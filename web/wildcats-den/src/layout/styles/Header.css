@@ -165,4 +165,39 @@ body {
 .btn-logout:hover {
   background-color: #5E1E20;
 }
+.notifications-container {
+  position: fixed;
+  top: 80px;
+  right: 20px;
+  z-index: 1002;
+  pointer-events: none;
+}
 
+.notifications-container > * {
+  pointer-events: auto;
+}
+.header-buttons {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+@media (max-width: 768px) {
+  .header {
+    padding: 10px 20px;
+  }
+  
+  .brand-name {
+    font-size: 1.2rem;
+  }
+  
+  .nav-links {
+    gap: 15px;
+  }
+  
+  .notifications-container {
+    top: 70px;
+    right: 10px;
+    left: 10px;
+  }
+}
