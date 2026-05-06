@@ -135,7 +135,7 @@ export default function Header({ isLoggedIn, onLogout, onSignInClick, onSignUpCl
     <header className={`header ${isHidden ? "hidden" : ""}`}>
       <div className="header-left" onClick={() => navigate("/")}>
         <img src="/images/collegia-logo.png" alt="Logo" className="logo" />
-        <h1 className="brand-name">Wildcat's Den</h1>
+        <h1 className="brand-name">Wildcat's DEN</h1>
       </div>
 
       <nav className="nav-links">

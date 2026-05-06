@@ -11,11 +11,11 @@ const Footer = () => {
         {/* Brand Section */}
         <div className="brand-section">
           <div className="logo-container">
-            <img src="/icons/logo.png" alt="Wildcat's Den Logo" />
-            <h1 className="brand-name">Wildcat's Den</h1>
+            <img src="/icons/logo.png" alt="Wildcat's DEN Logo" />
+            <h1 className="brand-name">Wildcat's DEN</h1>
           </div>
           <p className="brand-description">
-            Wildcat's Den allows students, faculty, and organizers to book venues for org, campus, or networking events in Cebu Institute of Technology-University.
+            Wildcat's DEN allows students, faculty, and organizers to book venues for org, campus, or networking events in Cebu Institute of Technology-University.
           </p>
         </div>
 
