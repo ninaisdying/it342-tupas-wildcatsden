@@ -131,8 +131,9 @@ export default function VenueEditModal({
         {error && <p className="vmod-error">{error}</p>}
 
         <form className="vmod-form" onSubmit={handleSave}>
-          <label className="vmod-label">Venue Name *</label>
+          <label className="vmod-label" htmlFor="editVenueName">Venue Name *</label>
           <input
+            id="editVenueName"
             className="vmod-input"
             value={editData.venueName}
             onChange={(e) =>
@@ -141,8 +142,9 @@ export default function VenueEditModal({
             required
           />
 
-          <label className="vmod-label">Location *</label>
+          <label className="vmod-label" htmlFor="editVenueLocation">Location *</label>
           <select
+            id="editVenueLocation"
             className="vmod-select"
             value={editData.venueLocation}
             onChange={(e) =>
@@ -158,8 +160,9 @@ export default function VenueEditModal({
             <option value="ACAD">ACAD</option>
           </select>
 
-          <label className="vmod-label">Capacity</label>
+          <label className="vmod-label" htmlFor="editVenueCapacity">Capacity</label>
           <input
+            id="editVenueCapacity"
             type="number"
             min="0"
             className="vmod-input"
@@ -170,8 +173,9 @@ export default function VenueEditModal({
             placeholder="Enter capacity"
           />
 
-          <label className="vmod-label">Description</label>
+          <label className="vmod-label" htmlFor="editVenueDescription">Description</label>
           <textarea
+            id="editVenueDescription"
             className="vmod-textarea"
             value={editData.description}
             onChange={(e) =>
@@ -179,8 +183,9 @@ export default function VenueEditModal({
             }
           />
 
-          <label className="vmod-label">Amenities (comma-separated)</label>
+          <label className="vmod-label" htmlFor="editVenueAmenities">Amenities (comma-separated)</label>
           <textarea
+            id="editVenueAmenities"
             className="vmod-textarea"
             value={editData.amenities}
             onChange={(e) =>
@@ -189,8 +194,9 @@ export default function VenueEditModal({
             placeholder="e.g., WiFi, Projector, Whiteboard"
           />
 
-          <label className="vmod-label">Assign Custodian</label>
+          <label className="vmod-label" htmlFor="editVenueCustodian">Assign Custodian</label>
           <select
+            id="editVenueCustodian"
             className="vmod-select"
             value={editData.custodianId}
             onChange={(e) => {
@@ -212,9 +218,10 @@ export default function VenueEditModal({
             ))}
           </select>
 
-          <label className="vmod-label">Image URL or Upload</label>
+          <label className="vmod-label" htmlFor="editVenueImageUrl">Image URL or Upload</label>
           <div className="vmod-image-upload-row">
             <input
+              id="editVenueImageUrl"
               className="vmod-input"
               value={editData.image}
               onChange={(e) =>

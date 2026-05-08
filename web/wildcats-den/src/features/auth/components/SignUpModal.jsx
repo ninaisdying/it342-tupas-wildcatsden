@@ -69,6 +69,12 @@ export default function SignUpModal({ onClose, openSignIn }) {
     }
   };
 
+  const handleBlur = (e) => {
+    const { name, value } = e.target;
+    const error = validateField(name, value);
+    setFieldErrors({ ...fieldErrors, [name]: error });
+  };
+
   const validateField = (name, value) => {
     let error = "";
     
@@ -212,13 +218,15 @@ export default function SignUpModal({ onClose, openSignIn }) {
 
   const renderField = (name, label, type = "text", placeholder = "", required = true) => (
     <div className="form-field-group">
-      <label className="label">{label} {required && "*"}</label>
+      <label className="label" htmlFor={name}>{label} {required && "*"}</label>
       <input
+        id={name}
         className={`input-pill ${fieldErrors[name] ? 'input-error' : ''}`}
         name={name}
         type={type}
         value={form[name]}
         onChange={handleChange}
+        onBlur={handleBlur}
         placeholder={placeholder}
         required={required}
       />
@@ -230,12 +238,14 @@ export default function SignUpModal({ onClose, openSignIn }) {
 
   const renderSelectField = (name, label, options, required = true) => (
     <div className="form-field-group">
-      <label className="label">{label} {required && "*"}</label>
+      <label className="label" htmlFor={name}>{label} {required && "*"}</label>
       <select
+        id={name}
         className={`input-pill ${fieldErrors[name] ? 'input-error' : ''}`}
         name={name}
         value={form[name]}
         onChange={handleChange}
+        onBlur={handleBlur}
         required={required}
       >
         {options}

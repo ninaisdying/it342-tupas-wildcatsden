@@ -201,30 +201,14 @@ export default function BookingForm({ venueId, venueData, onClose }) {
       const s = opt.hour24;
       const latestEnd = Math.min(s + 6, 22);
       
-      // Check if time slot is available
       if (opt.disabled) return false;
       
-      // Check if there's at least 1 hour available after this time
       return s + 1 <= latestEnd;
     });
   }, [timeOptions]);
 
-  // Filter end options based on start time and availability
-  const allowedEndOptions = useMemo(() => {
-    if (!startTime) return timeOptions;
-    
-    const startHour = Number(startTime.split(":")[0]);
-    const endHours = [];
-    
-    for (let delta = 1; delta <= 6; delta++) {
-      const h = startHour + delta;
-      if (h <= 22) endHours.push(h);
-    }
-    
-    return timeOptions.filter((opt) => {
-      return endHours.includes(opt.hour24) && !opt.disabled;
-    });
-  }, [startTime, timeOptions]);
+  // Always show full end time range and let validation handle invalid selections
+  const allowedEndOptions = useMemo(() => timeOptions, [timeOptions]);
 
   // Ensure endTime is valid when startTime changes
   useEffect(() => {
@@ -432,13 +416,15 @@ export default function BookingForm({ venueId, venueData, onClose }) {
 
     return (
       <div className="row">
-        <label className="field-label">Date</label>
+        <label className="field-label" htmlFor="bookingDate">Date</label>
         <input
+          id="bookingDate"
           type="date"
           value={date}
           min={minDate}
           max={maxDate.toISOString().split('T')[0]}
           onChange={(e) => setDate(e.target.value)}
+          onBlur={() => validate()}
           aria-invalid={!!errors.date}
           className={`${errors.date ? "invalid" : ""} ${isDateUnavailable(date) ? "unavailable-date" : ""}`}
           required
@@ -467,8 +453,9 @@ export default function BookingForm({ venueId, venueData, onClose }) {
         {renderDateInput()}
 
         <div className="row">
-          <label className="field-label">Event Name</label>
+          <label className="field-label" htmlFor="eventName">Event Name</label>
           <input
+            id="eventName"
             type="text"
             placeholder="e.g. CodeChum Certification"
             value={eventName}
@@ -481,8 +468,9 @@ export default function BookingForm({ venueId, venueData, onClose }) {
         </div>
 
         <div className="row">
-          <label className="field-label">Event Type</label>
+          <label className="field-label" htmlFor="eventType">Event Type</label>
           <select
+            id="eventType"
             value={eventType}
             onChange={(e) => setEventType(e.target.value)}
             aria-invalid={!!errors.eventType}
@@ -500,8 +488,9 @@ export default function BookingForm({ venueId, venueData, onClose }) {
 
         <div className="row time-row">
           <div className="time-col">
-            <label className="field-label">Start Time</label>
+            <label className="field-label" htmlFor="startTime">Start Time</label>
             <select
+              id="startTime"
               value={startTime}
               onChange={(e) => setStartTime(e.target.value)}
               aria-invalid={!!(errors.startTime || errors.time || errors.startTimeAdvance)}
@@ -524,8 +513,9 @@ export default function BookingForm({ venueId, venueData, onClose }) {
           </div>
 
           <div className="time-col">
-            <label className="field-label">End Time</label>
+            <label className="field-label" htmlFor="endTime">End Time</label>
             <select
+              id="endTime"
               value={endTime}
               onChange={(e) => setEndTime(e.target.value)}
               aria-invalid={!!(errors.endTime || errors.time)}
@@ -553,13 +543,15 @@ export default function BookingForm({ venueId, venueData, onClose }) {
         )}
 
         <div className="row">
-          <label className="field-label">Expected Attendees</label>
+          <label className="field-label" htmlFor="attendees">Expected Attendees</label>
           <input
+            id="attendees"
             type="number"
             min="1"
             placeholder="e.g. 45"
             value={attendees}
             onChange={(e) => setAttendees(e.target.value)}
+            onBlur={() => validate()}
             aria-invalid={!!errors.attendees}
             className={errors.attendees ? "invalid" : ""}
             required
@@ -568,8 +560,9 @@ export default function BookingForm({ venueId, venueData, onClose }) {
         </div>
 
         <div className="row">
-          <label className="field-label">Purpose / Description</label>
+          <label className="field-label" htmlFor="description">Purpose / Description</label>
           <textarea
+            id="description"
             placeholder="Describe your event"
             value={description}
             onChange={(e) => setDescription(e.target.value)}

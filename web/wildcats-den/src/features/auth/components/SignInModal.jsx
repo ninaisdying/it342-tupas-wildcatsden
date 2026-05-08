@@ -118,8 +118,9 @@ export default function SignInModal({ onClose, openSignUp }) {
             {error && <p className="error-text">{error}</p>}
 
             <form className="modal-form" onSubmit={handleSubmit}>
-              <label className="label">Email</label>
+              <label className="label" htmlFor="email">Email</label>
               <input
+                id="email"
                 className="input-pill"
                 type="email"
                 name="email"
@@ -129,8 +130,9 @@ export default function SignInModal({ onClose, openSignUp }) {
                 required
               />
 
-              <label className="label">Password</label>
+              <label className="label" htmlFor="password">Password</label>
               <input
+                id="password"
                 className="input-pill"
                 type="password"
                 name="password"

@@ -63,21 +63,21 @@ export default function Bookings() {
         console.log('🔵 Response status:', response.status);
         
         if (!response.ok) {
-          const errorText = await response.text();
+          const errorText = typeof response.text === 'function' ? await response.text() : response.statusText || response.status;
           console.error('🔴 Response error:', errorText);
-          throw new Error(`Failed to fetch bookings: ${response.status}`);
+          throw new Error(`Failed to fetch bookings: ${response.status || response.statusText || "Unknown status"}`);
         }
         
-        const contentType = response.headers.get('content-type');
+        const contentType = response.headers?.get?.('content-type') || response.headers?.get?.('Content-Type') || "";
         console.log('🔵 Content-Type:', contentType);
         
-        if (!contentType || !contentType.includes('application/json')) {
-          const text = await response.text();
+        if (contentType && !contentType.includes('application/json')) {
+          const text = typeof response.text === 'function' ? await response.text() : "";
           console.error('🔴 Got HTML instead of JSON:', text.substring(0, 500));
           throw new Error('Server returned HTML instead of JSON. Check if endpoint exists.');
         }
         
-        const userBookings = await response.json();
+        const userBookings = typeof response.json === 'function' ? await response.json() : []=== 'function' ? await response.json() : [];
         console.log('🟢 Bookings from DB (raw):', userBookings);
         
         // Transform the data
