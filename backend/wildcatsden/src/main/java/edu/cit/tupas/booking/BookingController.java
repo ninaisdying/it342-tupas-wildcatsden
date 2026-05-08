@@ -1,9 +1,11 @@
 package edu.cit.tupas.booking;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -98,7 +100,7 @@ public class BookingController {
     }
     
     @GetMapping("/date/{date}")
-    public ResponseEntity<List<BookingEntity>> getBookingsByDate(@PathVariable java.util.Date date) {
+    public ResponseEntity<List<BookingEntity>> getBookingsByDate(@PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") Date date) {
         List<BookingEntity> bookings = bookingService.getBookingsByDate(date);
         return ResponseEntity.ok(bookings);
     }
@@ -111,7 +113,7 @@ public class BookingController {
     
     @GetMapping("/availability/{venueId}/{date}")
     public ResponseEntity<Boolean> checkVenueAvailability(@PathVariable Long venueId, 
-                                                         @PathVariable java.util.Date date) {
+                                                         @PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") Date date) {
         boolean isAvailable = bookingService.isVenueAvailable(venueId, date);
         return ResponseEntity.ok(isAvailable);
     }
