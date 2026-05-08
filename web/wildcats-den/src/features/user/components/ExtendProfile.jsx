@@ -219,16 +219,18 @@ function EditForm({ user, onSave, onCancel, showSuccessModal, showErrorModal }) 
         </div>
       </div>
 
-      <label>About</label>
+      <label htmlFor="profileAbout">About</label>
       <textarea 
+        id="profileAbout"
         name="about"
         value={formData.about} 
         onChange={handleInputChange}
         placeholder="Tell us about yourself..."
       />
 
-      <label>Location</label>
+      <label htmlFor="profileLocation">Location</label>
       <input 
+        id="profileLocation"
         type="text" 
         name="location"
         value={formData.location} 

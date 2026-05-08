@@ -146,8 +146,9 @@ export default function VenueAddModal({ onClose, onSave }) {
         {error && <p className="vmod-error">{error}</p>}
 
         <form className="vmod-form" onSubmit={handleSave}>
-          <label className="vmod-label">Venue Name *</label>
+          <label className="vmod-label" htmlFor="venueName">Venue Name *</label>
           <input
+            id="venueName"
             className="vmod-input"
             value={formData.venueName}
             onChange={(e) =>
@@ -156,8 +157,9 @@ export default function VenueAddModal({ onClose, onSave }) {
             required
           />
 
-          <label className="vmod-label">Location *</label>
+          <label className="vmod-label" htmlFor="venueLocation">Location *</label>
           <select
+            id="venueLocation"
             className="vmod-select"
             value={formData.venueLocation}
             onChange={(e) =>
@@ -173,8 +175,9 @@ export default function VenueAddModal({ onClose, onSave }) {
             <option value="ACAD">ACAD</option>
           </select>
 
-          <label className="vmod-label">Capacity</label>
+          <label className="vmod-label" htmlFor="venueCapacity">Capacity</label>
           <input
+            id="venueCapacity"
             type="number"
             min="0"
             className="vmod-input"
@@ -185,8 +188,9 @@ export default function VenueAddModal({ onClose, onSave }) {
             placeholder="Enter capacity"
           />
 
-          <label className="vmod-label">Description</label>
+          <label className="vmod-label" htmlFor="venueDescription">Description</label>
           <textarea
+            id="venueDescription"
             className="vmod-textarea"
             value={formData.description}
             onChange={(e) =>
@@ -194,8 +198,9 @@ export default function VenueAddModal({ onClose, onSave }) {
             }
           />
 
-          <label className="vmod-label">Amenities (comma-separated)</label>
+          <label className="vmod-label" htmlFor="venueAmenities">Amenities (comma-separated)</label>
           <textarea
+            id="venueAmenities"
             className="vmod-textarea"
             value={formData.amenities}
             onChange={(e) =>
@@ -204,8 +209,9 @@ export default function VenueAddModal({ onClose, onSave }) {
             placeholder="e.g., WiFi, Projector, Whiteboard"
           />
 
-          <label className="vmod-label">Assign Custodian</label>
+          <label className="vmod-label" htmlFor="venueCustodian">Assign Custodian</label>
           <select
+            id="venueCustodian"
             className="vmod-select"
             value={formData.custodianId}
             onChange={(e) =>
@@ -220,9 +226,10 @@ export default function VenueAddModal({ onClose, onSave }) {
             ))}
           </select>
 
-          <label className="vmod-label">Image URL or Upload</label>
+          <label className="vmod-label" htmlFor="venueImageUrl">Image URL or Upload</label>
           <div className="vmod-image-upload-row">
             <input
+              id="venueImageUrl"
               className="vmod-input"
               value={formData.image}
               onChange={(e) =>

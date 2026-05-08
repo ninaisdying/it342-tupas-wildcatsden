@@ -61,7 +61,10 @@ export default function CustodianBookings() {
           
           // First, fetch venues managed by this custodian
           const venuesResponse = await fetch(`http://localhost:8080/api/venues/custodian/${user.userId}`);
-          const venues = await venuesResponse.json();
+          if (!venuesResponse.ok) {
+            throw new Error("Failed to load custodian venues.");
+          }
+          const venues = typeof venuesResponse.json === 'function' ? await venuesResponse.json() : [];
           
           if (!venues || venues.length === 0) {
             setBookingsData([]);
@@ -69,14 +72,16 @@ export default function CustodianBookings() {
             return;
           }
 
-          // Fetch all bookings, then filter those belonging to custodian's venues
           const allBookingsResponse = await fetch('http://localhost:8080/api/bookings');
-          const allBookings = await allBookingsResponse.json();
+          if (!allBookingsResponse.ok) {
+            throw new Error("Failed to load bookings.");
+          }
+          const allBookings = typeof allBookingsResponse.json === 'function' ? await allBookingsResponse.json() : [];
           
           // Filter bookings for custodian's venues
           const custodianVenueIds = venues.map(venue => venue.venueId);
           const custodianBookings = allBookings.filter(booking => 
-            booking.venue && custodianVenueIds.includes(booking.venue.venueId)
+            booking.venue && custodianVenueIds.includes(booking.venue.venueId || booking.venueId)
           );
 
           console.log('🟢 Custodian Bookings - Bookings from DB:', custodianBookings);

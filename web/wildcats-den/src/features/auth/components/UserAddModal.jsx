@@ -1,4 +1,4 @@
-import { useState } from "react";
+﻿import { useState } from "react";
 import "../../../features/admin/styles/UserModal.css";
 
 export default function UserAddModal({ onClose, onSave }) {
@@ -54,7 +54,6 @@ export default function UserAddModal({ onClose, onSave }) {
       return;
     }
 
-    // Correct endpoint
     let endpoint = "/users";
     if (form.userType === "Student") endpoint = "/students";
     if (form.userType === "Faculty") endpoint = "/faculty";
@@ -67,17 +66,14 @@ export default function UserAddModal({ onClose, onSave }) {
       userType: form.userType,
       about: form.about,
       location: form.location,
-      password: "12345678", // Default password for new users
-
+      password: "12345678",
       ...(form.userType === "Student" && {
         course: form.course,
         organization: form.organization,
       }),
-
       ...(form.userType === "Coordinator" && {
         affiliation: form.affiliation,
       }),
-
       ...(form.userType === "Faculty" && {
         department: form.department,
       }),
@@ -100,10 +96,7 @@ export default function UserAddModal({ onClose, onSave }) {
       }
 
       const createdUser = await res.json();
-
-      // ⭐ notify parent to reload UI instantly
       onSave(createdUser);
-
       onClose();
     } catch (err) {
       setError(err.message || "Failed to create user.");
@@ -121,11 +114,10 @@ export default function UserAddModal({ onClose, onSave }) {
 
         {error && <p className="umod-error">{error}</p>}
 
-        {/* ⭐ Correct form submit handler */}
         <form className="umod-form" onSubmit={handleSubmit}>
-
-          <label className="umod-label">First Name *</label>
+          <label className="umod-label" htmlFor="firstName">First Name *</label>
           <input
+            id="firstName"
             className="umod-input"
             name="firstName"
             value={form.firstName}
@@ -134,8 +126,9 @@ export default function UserAddModal({ onClose, onSave }) {
             required
           />
 
-          <label className="umod-label">Last Name *</label>
+          <label className="umod-label" htmlFor="lastName">Last Name *</label>
           <input
+            id="lastName"
             className="umod-input"
             name="lastName"
             value={form.lastName}
@@ -144,8 +137,9 @@ export default function UserAddModal({ onClose, onSave }) {
             required
           />
 
-          <label className="umod-label">Email *</label>
+          <label className="umod-label" htmlFor="email">Email *</label>
           <input
+            id="email"
             className="umod-input"
             name="email"
             type="email"
@@ -155,8 +149,9 @@ export default function UserAddModal({ onClose, onSave }) {
             required
           />
 
-          <label className="umod-label">Role *</label>
+          <label className="umod-label" htmlFor="userType">Role *</label>
           <select
+            id="userType"
             className="umod-select"
             name="userType"
             value={form.userType}
@@ -171,8 +166,9 @@ export default function UserAddModal({ onClose, onSave }) {
 
           {form.userType === "Student" && (
             <>
-              <label className="umod-label">Course *</label>
+              <label className="umod-label" htmlFor="course">Course *</label>
               <input
+                id="course"
                 className="umod-input"
                 name="course"
                 value={form.course}
@@ -181,8 +177,9 @@ export default function UserAddModal({ onClose, onSave }) {
                 required
               />
 
-              <label className="umod-label">Organization *</label>
+              <label className="umod-label" htmlFor="organization">Organization *</label>
               <input
+                id="organization"
                 className="umod-input"
                 name="organization"
                 value={form.organization}
@@ -195,8 +192,9 @@ export default function UserAddModal({ onClose, onSave }) {
 
           {form.userType === "Coordinator" && (
             <>
-              <label className="umod-label">Affiliation *</label>
+              <label className="umod-label" htmlFor="affiliation">Affiliation *</label>
               <input
+                id="affiliation"
                 className="umod-input"
                 name="affiliation"
                 value={form.affiliation}
@@ -209,8 +207,9 @@ export default function UserAddModal({ onClose, onSave }) {
 
           {form.userType === "Faculty" && (
             <>
-              <label className="umod-label">Department *</label>
+              <label className="umod-label" htmlFor="department">Department *</label>
               <input
+                id="department"
                 className="umod-input"
                 name="department"
                 value={form.department}
@@ -221,8 +220,9 @@ export default function UserAddModal({ onClose, onSave }) {
             </>
           )}
 
-          <label className="umod-label">About</label>
+          <label className="umod-label" htmlFor="about">About</label>
           <textarea
+            id="about"
             className="umod-textarea"
             name="about"
             value={form.about}
@@ -230,8 +230,9 @@ export default function UserAddModal({ onClose, onSave }) {
             placeholder="Enter additional information"
           />
 
-          <label className="umod-label">Location</label>
+          <label className="umod-label" htmlFor="location">Location</label>
           <input
+            id="location"
             className="umod-input"
             name="location"
             value={form.location}
@@ -243,14 +244,11 @@ export default function UserAddModal({ onClose, onSave }) {
             <button type="button" className="umod-btn-secondary" onClick={onClose}>
               Cancel
             </button>
-
             <button type="submit" className="umod-btn-primary" disabled={loading}>
-              {loading ? "Saving..." : "Save"}
+              {loading ? "Creating..." : "Create User"}
             </button>
           </div>
-
         </form>
-
       </div>
     </div>
   );

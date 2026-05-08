@@ -36,8 +36,9 @@ export default function ChangePasswordModal({ userId, onClose, onSave }) {
 
         {error && <p className="cp-error">{error}</p>}
 
-        <label className="cp-label">New password</label>
+        <label className="cp-label" htmlFor="newPassword">New password</label>
         <input
+          id="newPassword"
           className="cp-input"
           type="password"
           value={password}
@@ -45,8 +46,9 @@ export default function ChangePasswordModal({ userId, onClose, onSave }) {
           placeholder="At least 6 characters"
         />
 
-        <label className="cp-label">Confirm password</label>
+        <label className="cp-label" htmlFor="confirmPassword">Confirm password</label>
         <input
+          id="confirmPassword"
           className="cp-input"
           type="password"
           value={confirm}

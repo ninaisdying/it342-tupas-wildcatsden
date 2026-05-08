@@ -26,8 +26,9 @@ export default function UserEditModal({
           }}
         >
 
-          <label className="umod-label">First Name *</label>
+          <label className="umod-label" htmlFor="editFirstName">First Name *</label>
           <input
+            id="editFirstName"
             className="umod-input"
             value={editData.firstName}
             onChange={(e) =>
@@ -35,8 +36,9 @@ export default function UserEditModal({
             }
           />
 
-          <label className="umod-label">Last Name *</label>
+          <label className="umod-label" htmlFor="editLastName">Last Name *</label>
           <input
+            id="editLastName"
             className="umod-input"
             value={editData.lastName}
             onChange={(e) =>
@@ -44,8 +46,9 @@ export default function UserEditModal({
             }
           />
 
-          <label className="umod-label">Email *</label>
+          <label className="umod-label" htmlFor="editEmail">Email *</label>
           <input
+            id="editEmail"
             className="umod-input"
             type="email"
             value={editData.email}
@@ -54,8 +57,9 @@ export default function UserEditModal({
             }
           />
 
-          <label className="umod-label">Role *</label>
+          <label className="umod-label" htmlFor="editUserType">Role *</label>
           <select
+            id="editUserType"
             className="umod-select"
             value={editData.userType}
             onChange={(e) =>
@@ -69,8 +73,9 @@ export default function UserEditModal({
             <option value="Student">Student</option>
           </select>
 
-          <label className="umod-label">About</label>
+          <label className="umod-label" htmlFor="editAbout">About</label>
           <textarea
+            id="editAbout"
             className="umod-textarea"
             value={editData.about}
             onChange={(e) =>
@@ -78,8 +83,9 @@ export default function UserEditModal({
             }
           />
 
-          <label className="umod-label">Location</label>
+          <label className="umod-label" htmlFor="editLocation">Location</label>
           <input
+            id="editLocation"
             className="umod-input"
             value={editData.location}
             onChange={(e) =>
