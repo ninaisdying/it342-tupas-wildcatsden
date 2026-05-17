@@ -1,10 +1,11 @@
-package com.example.wildcatsden
+package com.example.wildcatsden.venues.adapter
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.wildcatsden.R
 
 class VenueCarouselAdapter(
     private val images: List<Int>

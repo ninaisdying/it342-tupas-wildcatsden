@@ -1,4 +1,4 @@
-package com.example.wildcatsden.data
+package com.example.wildcatsden.venues.data
 
 data class Venue(
     val venueId: Int = 0,

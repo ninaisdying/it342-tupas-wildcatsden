@@ -1,6 +1,5 @@
-package com.example.wildcatsden.api
+package com.example.wildcatsden.core.network
 
-import android.content.Context
 import android.util.Log
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaType

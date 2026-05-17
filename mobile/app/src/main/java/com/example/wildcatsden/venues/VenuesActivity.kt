@@ -1,10 +1,11 @@
-package com.example.wildcatsden
+package com.example.wildcatsden.venues
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.wildcatsden.R
 
 class VenuesActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

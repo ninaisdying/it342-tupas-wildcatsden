@@ -1,4 +1,4 @@
-package com.example.wildcatsden
+package com.example.wildcatsden.venues
 
 import android.os.Bundle
 import android.text.Editable
@@ -9,8 +9,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.wildcatsden.adapter.VenueOverviewAdapter
-import com.example.wildcatsden.data.Venue
+import com.example.wildcatsden.R
+import com.example.wildcatsden.venues.adapter.VenueOverviewAdapter
+import com.example.wildcatsden.venues.data.Venue
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.coroutines.launch

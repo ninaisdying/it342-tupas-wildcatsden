@@ -1,4 +1,4 @@
-package com.example.wildcatsden
+package com.example.wildcatsden.venues
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,8 +10,10 @@ import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.wildcatsden.adapter.VenueAdapter
-import com.example.wildcatsden.data.Venue
+import com.example.wildcatsden.R
+import com.example.wildcatsden.events.adapter.ui.item.VenueDetailsActivity
+import com.example.wildcatsden.venues.adapter.VenueAdapter
+import com.example.wildcatsden.venues.data.Venue
 import com.google.android.material.chip.ChipGroup
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.Dispatchers

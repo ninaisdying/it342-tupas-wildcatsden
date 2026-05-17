@@ -1,4 +1,4 @@
-package com.example.wildcatsden
+package com.example.wildcatsden.core.network.components
 
 import android.content.Context
 import android.content.Intent
@@ -7,6 +7,8 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.FrameLayout
 import android.widget.TextView
+import com.example.wildcatsden.R
+import com.example.wildcatsden.venues.VenuesActivity
 
 class FooterView @JvmOverloads constructor(
     context: Context,

@@ -1,4 +1,4 @@
-package com.example.wildcatsden.api
+package com.example.wildcatsden.core.network.session
 
 import android.content.Context
 import android.content.SharedPreferences

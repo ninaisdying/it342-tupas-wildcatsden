@@ -19,36 +19,36 @@
 
         tools:targetApi="31">
         <activity
-            android:name=".SignUpModal"
+            android:name=".auth.components.SignUpModal"
             android:exported="false" />
         <activity
-            android:name=".SignInModal"
+            android:name=".auth.components.SignInModal"
             android:exported="false" />
         <activity
-            android:name=".VenuesActivity"
+            android:name=".venues.VenuesActivity"
             android:exported="false" />
         <activity
-            android:name=".Header"
+            android:name=".core.network.components.Header"
             android:exported="false" />
 
         <activity
-            android:name=".VenuesGridActivity"
+            android:name=".venues.VenuesGridActivity"
             android:exported="false"
-            android:parentActivityName=".HomePage" />
+            android:parentActivityName=".core.network.components.HomePage" />
 
         <activity
-            android:name=".VenueDetailsActivity"
+            android:name=".events.adapter.ui.item.VenueDetailsActivity"
             android:exported="false"
-            android:parentActivityName=".VenuesGridActivity" />
+            android:parentActivityName=".venues.VenuesGridActivity" />
 
         <activity
-            android:name=".VenueOverviewActivity"
+            android:name=".venues.VenueOverviewActivity"
             android:exported="false"
-            android:parentActivityName=".HomePage" />
+            android:parentActivityName=".core.network.components.HomePage" />
 
 
         <activity
-            android:name=".HomePage"
+            android:name=".core.network.components.HomePage"
             android:exported="true">
 
             <intent-filter>

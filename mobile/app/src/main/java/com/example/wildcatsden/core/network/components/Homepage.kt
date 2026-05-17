@@ -1,4 +1,4 @@
-package com.example.wildcatsden
+package com.example.wildcatsden.core.network.components
 
 import android.content.Intent
 import android.os.Bundle
@@ -11,7 +11,13 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.cardview.widget.CardView
-import com.example.wildcatsden.api.UserSession
+import com.example.wildcatsden.EventsAdapter
+import com.example.wildcatsden.R
+import com.example.wildcatsden.auth.components.SignInModal
+import com.example.wildcatsden.auth.components.SignUpModal
+import com.example.wildcatsden.core.network.session.UserSession
+import com.example.wildcatsden.venues.VenuesGridActivity
+import com.example.wildcatsden.venues.adapter.VenueCarouselAdapter
 import org.json.JSONObject
 
 class HomePage : AppCompatActivity(), SignInModal.SignInListener, SignUpModal.SignUpListener {
