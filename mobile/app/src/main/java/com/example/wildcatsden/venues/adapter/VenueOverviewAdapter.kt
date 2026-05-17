@@ -1,10 +1,12 @@
 package com.example.wildcatsden.venues.adapter
 
+import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.wildcatsden.R
@@ -72,8 +74,8 @@ class VenueOverviewAdapter : RecyclerView.Adapter<VenueOverviewAdapter.ViewHolde
                 val chip = Chip(itemView.context).apply {
                     text = amenity
                     isCheckable = false
-                    setChipBackgroundColorResource(R.color.primary)
-                    setTextColor(itemView.resources.getColor(android.R.color.white))
+                    chipBackgroundColor = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.primary))
+                    setTextColor(ContextCompat.getColor(context, android.R.color.white))
                 }
                 amenitiesChipGroup.addView(chip)
             }
@@ -82,8 +84,8 @@ class VenueOverviewAdapter : RecyclerView.Adapter<VenueOverviewAdapter.ViewHolde
                 val moreChip = Chip(itemView.context).apply {
                     text = "+${venue.amenities.size - 3}"
                     isCheckable = false
-                    setChipBackgroundColorResource(R.color.primary_dark)
-                    setTextColor(itemView.resources.getColor(android.R.color.white))
+                    chipBackgroundColor = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.primary_dark))
+                    setTextColor(ContextCompat.getColor(context, android.R.color.white))
                 }
                 amenitiesChipGroup.addView(moreChip)
             }

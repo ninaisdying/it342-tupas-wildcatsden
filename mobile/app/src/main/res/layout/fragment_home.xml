@@ -7,15 +7,16 @@
     android:layout_height="match_parent"
     android:background="#F7F7F7"
     android:orientation="vertical"
-    tools:context=".core.network.components.HomePage">
+    tools:context=".core.network.components.HomeFragment">
 
     <!-- Header - Fixed at top -->
+
+    <!-- Scrollable Content - Takes remaining space -->
     <com.example.wildcatsden.core.network.components.Header
         android:id="@+id/headerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <!-- Scrollable Content - Takes remaining space -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -30,7 +31,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="300dp">
+                android:layout_height="120dp">
 
                 <ImageView
                     android:layout_width="match_parent"
@@ -62,6 +63,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:textAlignment="center"
                             android:text="FIND YOUR VENUE"
                             android:textColor="@android:color/white"
                             android:textSize="40sp"

@@ -12,11 +12,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.wildcatsden.R
 import com.example.wildcatsden.venues.adapter.VenueOverviewAdapter
 import com.example.wildcatsden.venues.data.Venue
+import android.util.Log
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import org.json.JSONArray
+import org.json.JSONObject
+import java.net.HttpURLConnection
+import java.net.URL
 
 class VenueOverviewActivity : AppCompatActivity() {
 
@@ -88,6 +93,7 @@ class VenueOverviewActivity : AppCompatActivity() {
             showLoading(true)
             try {
                 val venues = fetchVenuesFromApi()
+                Log.d("VenueOverview", "Fetched ${venues.size} venues from API")
                 withContext(Dispatchers.Main) {
                     venuesList.clear()
                     venuesList.addAll(venues)
@@ -104,8 +110,52 @@ class VenueOverviewActivity : AppCompatActivity() {
     }
 
     private suspend fun fetchVenuesFromApi(): List<Venue> = withContext(Dispatchers.IO) {
-        // Same as in VenuesGridActivity
-        emptyList()
+        val url = URL("http://10.0.2.2:8080/api/venues")
+        val connection = url.openConnection() as HttpURLConnection
+
+        return@withContext try {
+            connection.requestMethod = "GET"
+            connection.connectTimeout = 15000
+            connection.readTimeout = 15000
+
+            val responseCode = connection.responseCode
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                val response = connection.inputStream.bufferedReader().readText()
+                parseVenuesFromJson(response)
+            } else {
+                emptyList()
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            emptyList()
+        } finally {
+            connection.disconnect()
+        }
+    }
+
+    private fun parseVenuesFromJson(jsonString: String): List<Venue> {
+        val venues = mutableListOf<Venue>()
+        try {
+            val jsonArray = JSONArray(jsonString)
+            for (i in 0 until jsonArray.length()) {
+                val jsonObject = jsonArray.getJSONObject(i)
+                venues.add(Venue(
+                    venueId = jsonObject.optInt("venueId", 0),
+                    venueName = jsonObject.optString("venueName", ""),
+                    venueLocation = jsonObject.optString("venueLocation", ""),
+                    venueCapacity = jsonObject.optInt("venueCapacity", 0),
+                    image = jsonObject.optString("image", jsonObject.optString("venueImage", "")),
+                    description = jsonObject.optString("description", jsonObject.optString("venueDescription", "")),
+                    custodianName = jsonObject.optString("custodianName", ""),
+                    amenities = jsonObject.optJSONArray("amenities")?.let { arr ->
+                        (0 until arr.length()).map { arr.getString(it) }
+                    } ?: emptyList()
+                ))
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return venues
     }
 
     private fun filterVenues() {
@@ -115,20 +165,21 @@ class VenueOverviewActivity : AppCompatActivity() {
             // Category filter
             val categoryMatch = when {
                 currentCategory == "All" -> true
-                currentCategory == "More" -> !knownAreas.contains(venue.venueLocation?.uppercase())
+                currentCategory == "More" -> !knownAreas.contains(venue.venueLocation?.uppercase() ?: "")
                 else -> venue.venueLocation?.uppercase() == currentCategory.uppercase()
             }
 
             // Search filter
             val searchMatch = currentSearch.isEmpty() ||
-                    venue.venueName?.contains(currentSearch, ignoreCase = true) == true ||
-                    venue.venueLocation?.contains(currentSearch, ignoreCase = true) == true ||
-                    venue.custodianName?.contains(currentSearch, ignoreCase = true) == true ||
-                    venue.amenities?.any { it.contains(currentSearch, ignoreCase = true) } == true
+                    venue.venueName.contains(currentSearch, ignoreCase = true) ||
+                    (venue.venueLocation?.contains(currentSearch, ignoreCase = true) == true) ||
+                    (venue.custodianName?.contains(currentSearch, ignoreCase = true) == true) ||
+                    venue.amenities.any { it.contains(currentSearch, ignoreCase = true) }
 
             categoryMatch && searchMatch
         }
 
+        Log.d("VenueOverview", "Filtered to ${filtered.size} venues (Total: ${venuesList.size})")
         overviewAdapter.submitList(filtered)
     }
 
