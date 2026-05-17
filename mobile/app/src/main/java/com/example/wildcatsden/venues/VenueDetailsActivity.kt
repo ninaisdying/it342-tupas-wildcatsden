@@ -52,8 +52,8 @@ class VenueDetailsActivity : AppCompatActivity() {
     private var venueId: Int = 0
     private var venueData: Venue? = null
 
-    private var job = Job()
-    private val coroutineScope = CoroutineScope(Dispatchers.Main + Job())
+    private val job = Job()
+    private val coroutineScope = CoroutineScope(Dispatchers.Main + job)
 
     companion object {
         private const val BASE_URL = "http://10.0.2.2:8080/api/venues"
@@ -78,7 +78,7 @@ class VenueDetailsActivity : AppCompatActivity() {
 
     private fun initViews() {
         btnBack = findViewById(R.id.btnBack)
-        btnBookNow = findViewById(R.id.btnBookNow)
+        btnBookNow = findViewById(R.id.btnBook)
         btnShare = findViewById(R.id.btnShare)
 
         // These are inside the included view_venue_description.xml
@@ -161,8 +161,8 @@ class VenueDetailsActivity : AppCompatActivity() {
             venueName = json.optString("venueName", ""),
             venueLocation = json.optString("venueLocation", ""),
             venueCapacity = json.optInt("venueCapacity", 0),
-            image = json.optString("image", ""),
-            description = json.optString("description", ""),
+            image = json.optString("image", json.optString("venueImage", "")),
+            description = json.optString("description", json.optString("venueDescription", "")),
             custodianId = json.optInt("custodianId", 0),
             custodianName = json.optString("custodianName", ""),
             amenities = json.optJSONArray("amenities")?.let { arr ->
@@ -185,13 +185,20 @@ class VenueDetailsActivity : AppCompatActivity() {
         // Load main image (normalize relative paths)
         val raw = venue.image
         val resolved = if (raw.isNullOrEmpty()) null else when {
-            raw.startsWith("http") -> raw
+            raw.startsWith("http") -> {
+                // Replace localhost with emulator host if needed
+                if (raw.contains("localhost") || raw.contains("127.0.0.1")) {
+                    raw.replace("localhost", "10.0.2.2").replace("127.0.0.1", "10.0.2.2")
+                } else raw
+            }
             raw.startsWith("/") -> IMAGE_BASE + raw
             else -> IMAGE_BASE + "/" + raw
         }
+        android.util.Log.d("VenueDetails", "Resolved image URL: $resolved")
         Glide.with(this)
             .load(resolved)
             .placeholder(R.drawable.ic_placeholder)
+            .error(R.drawable.ic_placeholder)
             .into(mainImage)
 
         displayAmenities(venue.amenities)
@@ -240,6 +247,8 @@ class VenueDetailsActivity : AppCompatActivity() {
         val etStartTime = dialogView.findViewById<TextInputEditText>(R.id.etStartTime)
         val etEndTime = dialogView.findViewById<TextInputEditText>(R.id.etEndTime)
         val etPurpose = dialogView.findViewById<TextInputEditText>(R.id.etPurpose)
+        val etEventName = dialogView.findViewById<TextInputEditText>(R.id.etEventName)
+        val etAttendees = dialogView.findViewById<TextInputEditText>(R.id.etAttendees)
         val btnCancel = dialogView.findViewById<Button>(R.id.btnCancel)
         val btnSubmit = dialogView.findViewById<Button>(R.id.btnSubmit)
 
@@ -284,14 +293,17 @@ class VenueDetailsActivity : AppCompatActivity() {
             val startTime = etStartTime.text.toString()
             val endTime = etEndTime.text.toString()
             val purpose = etPurpose.text.toString()
+            val eventNameInput = etEventName.text.toString()
+            val attendeesInput = etAttendees.text.toString()
 
             when {
                 date.isEmpty() -> Toast.makeText(this, "Please select a date", Toast.LENGTH_SHORT).show()
                 startTime.isEmpty() -> Toast.makeText(this, "Please select start time", Toast.LENGTH_SHORT).show()
                 endTime.isEmpty() -> Toast.makeText(this, "Please select end time", Toast.LENGTH_SHORT).show()
-                purpose.isEmpty() -> Toast.makeText(this, "Please enter purpose", Toast.LENGTH_SHORT).show()
+                eventNameInput.isEmpty() -> Toast.makeText(this, "Please enter event name", Toast.LENGTH_SHORT).show()
+                attendeesInput.isEmpty() -> Toast.makeText(this, "Please enter attendees", Toast.LENGTH_SHORT).show()
                 else -> {
-                    submitBooking(date, startTime, endTime, purpose)
+                    submitBooking(date, startTime, endTime, purpose, eventNameInput, attendeesInput)
                     dialog.dismiss()
                 }
             }
@@ -300,16 +312,21 @@ class VenueDetailsActivity : AppCompatActivity() {
         dialog.show()
     }
 
-    private fun submitBooking(date: String, startTime: String, endTime: String, purpose: String) {
+    private fun submitBooking(date: String, startTime: String, endTime: String, purpose: String, eventNameInput: String, attendeesInput: String) {
         coroutineScope.launch {
             try {
-                // Build booking JSON
+                // Build booking JSON to match web client
                 val bookingJson = JSONObject().apply {
-                    put("venueId", venueData?.venueId ?: venueId)
+                    put("eventName", if (eventNameInput.isNotBlank()) eventNameInput else "Booking: ${venueData?.venueName}")
                     put("date", date)
-                    put("startTime", startTime)
-                    put("endTime", endTime)
-                    put("purpose", purpose)
+                    // timeSlot uses HH:mm:ss expected by backend
+                    put("timeSlot", "$startTime:00")
+                    put("capacity", try { attendeesInput.toInt() } catch (e: Exception) { 1 })
+                    put("description", purpose)
+                    put("eventType", "General")
+                    put("status", "pending")
+                    // venue object
+                    put("venue", JSONObject().apply { put("venueId", venueData?.venueId ?: venueId) })
                 }
 
                 val userId = UserSession.getUserId()

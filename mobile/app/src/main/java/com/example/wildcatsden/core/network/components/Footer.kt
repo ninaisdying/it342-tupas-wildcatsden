@@ -8,7 +8,7 @@ import android.view.LayoutInflater
 import android.widget.FrameLayout
 import android.widget.TextView
 import com.example.wildcatsden.R
-import com.example.wildcatsden.venues.VenuesActivity
+import com.example.wildcatsden.venues.VenueDetailsActivity
 
 class FooterView @JvmOverloads constructor(
     context: Context,
@@ -49,11 +49,11 @@ class FooterView @JvmOverloads constructor(
         }
 
         tvFaq.setOnClickListener {
-            context.startActivity(Intent(context, VenuesActivity::class.java))
+            context.startActivity(Intent(context, VenueDetailsActivity::class.java))
         }
 
         tvGuide.setOnClickListener {
-            context.startActivity(Intent(context, VenuesActivity::class.java))
+            context.startActivity(Intent(context, VenueDetailsActivity::class.java))
         }
 
         tvPhone.setOnClickListener {

@@ -24,9 +24,7 @@
         <activity
             android:name=".auth.components.SignInModal"
             android:exported="false" />
-        <activity
-            android:name=".venues.VenuesActivity"
-            android:exported="false" />
+
         <activity
             android:name=".core.network.components.Header"
             android:exported="false" />

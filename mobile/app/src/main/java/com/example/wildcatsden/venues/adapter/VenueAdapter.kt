@@ -45,7 +45,11 @@ class VenueAdapter(
             // Normalize image URL (backend may return relative paths)
             val raw = venue.image
             val resolved = if (raw.isNullOrEmpty()) null else when {
-                raw.startsWith("http") -> raw
+                raw.startsWith("http") -> {
+                    if (raw.contains("localhost") || raw.contains("127.0.0.1")) {
+                        raw.replace("localhost", "10.0.2.2").replace("127.0.0.1", "10.0.2.2")
+                    } else raw
+                }
                 raw.startsWith("/") -> "http://10.0.2.2:8080" + raw
                 else -> "http://10.0.2.2:8080/" + raw
             }
@@ -53,6 +57,7 @@ class VenueAdapter(
             Glide.with(itemView.context)
                 .load(resolved)
                 .placeholder(R.drawable.ic_placeholder)
+                .error(R.drawable.ic_placeholder)
                 .into(venueImage)
 
             itemView.setOnClickListener {

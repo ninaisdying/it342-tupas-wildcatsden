@@ -47,15 +47,21 @@ class VenueOverviewAdapter : RecyclerView.Adapter<VenueOverviewAdapter.ViewHolde
             venueDescription.text = venue.description ?: "No description available"
             custodianText.text = "Custodian: ${venue.custodianName ?: "Not assigned"}"
 
+            val resolvedImage = when {
+                venue.image.isNullOrEmpty() -> null
+                venue.image.startsWith("http") -> {
+                    if (venue.image.contains("localhost") || venue.image.contains("127.0.0.1")) {
+                        venue.image.replace("localhost", "10.0.2.2").replace("127.0.0.1", "10.0.2.2")
+                    } else venue.image
+                }
+                venue.image.startsWith("/") -> "http://10.0.2.2:8080" + venue.image
+                else -> "http://10.0.2.2:8080/" + venue.image
+            }
+
             Glide.with(itemView.context)
-                // Normalize image URL (backend may return relative paths)
-                .load(when {
-                    venue.image.isNullOrEmpty() -> null
-                    venue.image.startsWith("http") -> venue.image
-                    venue.image.startsWith("/") -> "http://10.0.2.2:8080" + venue.image
-                    else -> "http://10.0.2.2:8080/" + venue.image
-                })
+                .load(resolvedImage)
                 .placeholder(R.drawable.ic_placeholder)
+                .error(R.drawable.ic_placeholder)
                 .into(venueImage)
 
             // Display amenities (max 3)

@@ -26,6 +26,11 @@
         <!-- Gallery -->
         <include layout="@layout/view_venue_gallery" />
 
+        <!-- Description and Details -->
+        <include
+            android:id="@+id/venue_description_content"
+            layout="@layout/view_venue_description" />
+
 
     </LinearLayout>
 </ScrollView>
