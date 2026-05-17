@@ -4,13 +4,15 @@
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
-
-    <style name="Theme.WildcatsDen" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.WildcatsDen" parent="Base.Theme.WildcatsDen">
         <item name="colorPrimary">#7B282A</item>
+        <item name="colorPrimaryVariant">#5e1e20</item>
+        <item name="colorOnPrimary">@android:color/white</item>
         <item name="colorSecondary">#E7C51D</item>
-        <item name="android:windowBackground">#F7F7F7</item>
-        <item name="android:fontFamily">@font/montserrat</item>
-        <!-- For Material Components -->
+        <item name="colorSecondaryVariant">#d4b518</item>
+        <item name="colorOnSecondary">#7B282A</item>
+        <item name="android:statusBarColor">@color/primary</item>
+        <item name="android:windowBackground">@color/background</item>
         <item name="fontFamily">@font/montserrat</item>
     </style>
 </resources>

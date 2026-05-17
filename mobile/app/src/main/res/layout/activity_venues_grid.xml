@@ -32,6 +32,7 @@
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chipAll"
+                android:textColor="@color/text_primary"
                 style="@style/Widget.Material3.Chip.Filter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -40,6 +41,7 @@
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chipNGE"
+
                 style="@style/Widget.Material3.Chip.Filter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

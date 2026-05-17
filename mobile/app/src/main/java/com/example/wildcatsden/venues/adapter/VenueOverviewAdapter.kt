@@ -48,7 +48,13 @@ class VenueOverviewAdapter : RecyclerView.Adapter<VenueOverviewAdapter.ViewHolde
             custodianText.text = "Custodian: ${venue.custodianName ?: "Not assigned"}"
 
             Glide.with(itemView.context)
-                .load(venue.image)
+                // Normalize image URL (backend may return relative paths)
+                .load(when {
+                    venue.image.isNullOrEmpty() -> null
+                    venue.image.startsWith("http") -> venue.image
+                    venue.image.startsWith("/") -> "http://10.0.2.2:8080" + venue.image
+                    else -> "http://10.0.2.2:8080/" + venue.image
+                })
                 .placeholder(R.drawable.ic_placeholder)
                 .into(venueImage)
 

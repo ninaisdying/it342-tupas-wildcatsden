@@ -42,8 +42,16 @@ class VenueAdapter(
         fun bind(venue: Venue) {
             venueTitle.text = venue.venueName
 
+            // Normalize image URL (backend may return relative paths)
+            val raw = venue.image
+            val resolved = if (raw.isNullOrEmpty()) null else when {
+                raw.startsWith("http") -> raw
+                raw.startsWith("/") -> "http://10.0.2.2:8080" + raw
+                else -> "http://10.0.2.2:8080/" + raw
+            }
+
             Glide.with(itemView.context)
-                .load(venue.image)
+                .load(resolved)
                 .placeholder(R.drawable.ic_placeholder)
                 .into(venueImage)
 

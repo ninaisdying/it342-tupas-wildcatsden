@@ -67,17 +67,9 @@ class HomePage : AppCompatActivity(), SignInModal.SignInListener, SignUpModal.Si
 
     private fun initViews() {
         headerView = findViewById(R.id.headerView)
-        footerView = findViewById(R.id.footerView)
         eventsRecyclerView = findViewById(R.id.recyclerViewEvents)
         venueCarouselRecyclerView = findViewById(R.id.recyclerViewVenueCarousel)
         btnFindVenue = findViewById(R.id.btnFindVenue)
-        btnViewGuide = findViewById(R.id.btnViewGuide)
-        btnDiscoverMore = findViewById(R.id.btnDiscoverMore)
-        btnFaq = findViewById(R.id.btnFaq)
-        btnFindVenueDiscover = findViewById(R.id.btnFindVenueDiscover)
-        btnBrowseVenues = findViewById(R.id.btnBrowseVenues)
-        btnSubmitRequest = findViewById(R.id.btnSubmitRequest)
-        btnTrackBooking = findViewById(R.id.btnTrackBooking)
     }
 
     private fun setupHeaderListener() {
@@ -122,36 +114,10 @@ class HomePage : AppCompatActivity(), SignInModal.SignInListener, SignUpModal.Si
 
     private fun setupClickListeners() {
         btnFindVenue.setOnClickListener {
-            Toast.makeText(this, "Find Venue clicked", Toast.LENGTH_SHORT).show()
-        }
-
-        btnViewGuide.setOnClickListener {
-            Toast.makeText(this, "View Guide clicked", Toast.LENGTH_SHORT).show()
-        }
-
-        btnDiscoverMore.setOnClickListener {
-            Toast.makeText(this, "Discover More clicked", Toast.LENGTH_SHORT).show()
-        }
-
-        btnFaq.setOnClickListener {
-            Toast.makeText(this, "FAQ clicked", Toast.LENGTH_SHORT).show()
-        }
-
-        btnFindVenueDiscover.setOnClickListener {
-            Toast.makeText(this, "Find Venue (Discover) clicked", Toast.LENGTH_SHORT).show()
-        }
-
-        btnBrowseVenues.setOnClickListener {
-            Toast.makeText(this, "Browse Venues clicked", Toast.LENGTH_SHORT).show()
-        }
-
-        btnSubmitRequest.setOnClickListener {
-            Toast.makeText(this, "Submit Request clicked", Toast.LENGTH_SHORT).show()
-        }
-
-        btnTrackBooking.setOnClickListener {
-            Toast.makeText(this, "Track Booking clicked", Toast.LENGTH_SHORT).show()
-        }
+        Toast.makeText(this, "Find Venue clicked", Toast.LENGTH_SHORT).show()
+        val intent = Intent(this, VenuesGridActivity::class.java)
+        startActivity(intent)
+    }
     }
 
     private fun setupVenueCarousel() {
@@ -196,7 +162,6 @@ class HomePage : AppCompatActivity(), SignInModal.SignInListener, SignUpModal.Si
 
     override fun onChangePasswordRequired(user: JSONObject) {
         // Open change password modal
-        // You'll need to implement ChangePasswordModal
         Toast.makeText(this, "Please change your password", Toast.LENGTH_SHORT).show()
     }
 
