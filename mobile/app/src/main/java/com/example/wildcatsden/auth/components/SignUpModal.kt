@@ -1,4 +1,4 @@
-package com.example.wildcatsden
+package com.example.wildcatsden.auth.components
 
 import android.app.Dialog
 import android.content.Context
@@ -10,7 +10,8 @@ import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
-import com.example.wildcatsden.api.ApiService
+import com.example.wildcatsden.R
+import com.example.wildcatsden.core.network.ApiService
 import org.json.JSONObject
 
 class SignUpModal : DialogFragment() {

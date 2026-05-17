@@ -1,4 +1,4 @@
-package com.example.wildcatsden
+package com.example.wildcatsden.core.network.components
 
 import android.content.Context
 import android.util.AttributeSet
@@ -10,6 +10,9 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentActivity
+import com.example.wildcatsden.R
+import com.example.wildcatsden.auth.components.SignInModal
+import com.example.wildcatsden.auth.components.SignUpModal
 
 class Header @JvmOverloads constructor(
     context: Context,

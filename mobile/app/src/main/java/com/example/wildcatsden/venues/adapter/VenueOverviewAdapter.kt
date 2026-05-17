@@ -1,4 +1,4 @@
-package com.example.wildcatsden.adapter
+package com.example.wildcatsden.venues.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.wildcatsden.R
-import com.example.wildcatsden.data.Venue
+import com.example.wildcatsden.venues.data.Venue
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 

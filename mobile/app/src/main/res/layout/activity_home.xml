@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="#F7F7F7"
     android:orientation="vertical"
-    tools:context=".HomePage">
+    tools:context=".core.network.components.HomePage">
 
     <!-- Header - Fixed at top -->
     <com.example.wildcatsden.Header
