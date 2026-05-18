@@ -8,14 +8,14 @@
     android:background="#FFFFFF">
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Book This Venue"
-        android:textSize="20sp"
-        android:textStyle="bold"
         android:textColor="#7B282A"
-        android:layout_marginBottom="16dp"
-        android:gravity="center" />
+        android:textSize="28sp"
+        android:layout_gravity="center"
+        android:textStyle="bold"
+        android:layout_marginBottom="8dp" />
 
     <!-- Venue Name -->
     <TextView

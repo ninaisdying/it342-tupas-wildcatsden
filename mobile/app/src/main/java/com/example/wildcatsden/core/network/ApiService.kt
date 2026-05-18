@@ -156,6 +156,27 @@ object ApiService {
         executeRequest(request, "changePassword", callback)
     }
 
+    fun updateProfilePhoto(userId: Int, imageBytes: ByteArray, fileName: String, callback: ApiCallback) {
+        val url = "$BASE_URL/users/$userId/profile-photo"
+
+        val body = MultipartBody.Builder()
+            .setType(MultipartBody.FORM)
+            .addFormDataPart(
+                "photo",
+                fileName,
+                imageBytes.toRequestBody("image/*".toMediaType())
+            )
+            .build()
+
+        val request = Request.Builder()
+            .url(url)
+            .put(body)
+            .addHeader("Accept", "application/json")
+            .build()
+
+        executeRequest(request, "updateProfilePhoto", callback)
+    }
+
     // Booking APIs
     fun createBooking(bookingData: JSONObject, userId: Int, callback: ApiCallback) {
         val url = "$BASE_URL/bookings?userId=$userId"
@@ -189,6 +210,45 @@ object ApiService {
             .build()
 
         executeRequest(request, "getUserBookings", callback)
+    }
+
+    fun updateBooking(bookingId: Long, bookingData: JSONObject, callback: ApiCallback) {
+        val url = "$BASE_URL/bookings/$bookingId"
+
+        Log.d(TAG, "=== UPDATE BOOKING ===")
+        Log.d(TAG, "URL: $url")
+        Log.d(TAG, "Booking ID: $bookingId")
+        Log.d(TAG, "Data: $bookingData")
+
+        val request = Request.Builder()
+            .url(url)
+            .put(bookingData.toString().toRequestBody(JSON))
+            .addHeader("Content-Type", "application/json")
+            .addHeader("Accept", "application/json")
+            .build()
+
+        executeRequest(request, "updateBooking", callback)
+    }
+
+    fun updateBookingStatus(bookingId: Long, status: String, callback: ApiCallback) {
+        val url = "$BASE_URL/bookings/$bookingId/status"
+        val json = JSONObject().apply {
+            put("status", status)
+        }
+
+        Log.d(TAG, "=== UPDATE BOOKING STATUS ===")
+        Log.d(TAG, "URL: $url")
+        Log.d(TAG, "Booking ID: $bookingId")
+        Log.d(TAG, "Status: $status")
+
+        val request = Request.Builder()
+            .url(url)
+            .put(json.toString().toRequestBody(JSON))
+            .addHeader("Content-Type", "application/json")
+            .addHeader("Accept", "application/json")
+            .build()
+
+        executeRequest(request, "updateBookingStatus", callback)
     }
 
     // Admin: Create user

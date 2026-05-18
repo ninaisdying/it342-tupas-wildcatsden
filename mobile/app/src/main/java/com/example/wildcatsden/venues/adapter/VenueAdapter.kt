@@ -61,7 +61,7 @@ class VenueAdapter(
 
             itemView.setOnClickListener {
                 onItemClick(venue.venueId)
-            cd
+            }
         }
     }
 }

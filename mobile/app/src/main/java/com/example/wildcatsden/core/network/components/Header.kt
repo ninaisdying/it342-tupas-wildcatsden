@@ -101,7 +101,4 @@ class Header @JvmOverloads constructor(
         }
     }
 
-    fun updateProfilePhoto(photoUrl: String?) {
-        // Load image using Glide or Coil when available
-    }
 }

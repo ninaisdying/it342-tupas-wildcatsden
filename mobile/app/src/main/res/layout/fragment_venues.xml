@@ -19,9 +19,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Find a Venue"
-            android:textSize="16sp"
-            android:textStyle="bold"
             android:textColor="#7B282A"
+            android:textSize="28sp"
+            android:textStyle="bold"
             android:layout_marginBottom="8dp" />
 
         <!-- Search View -->

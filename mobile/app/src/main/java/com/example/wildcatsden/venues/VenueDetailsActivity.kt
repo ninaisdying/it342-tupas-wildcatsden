@@ -296,6 +296,8 @@ class VenueDetailsActivity : AppCompatActivity() {
             val purpose = etPurpose.text.toString()
             val eventNameInput = etEventName.text.toString()
             val attendeesInput = etAttendees.text.toString()
+            val attendeesCount = attendeesInput.toIntOrNull() ?: 0
+            val venueCapacityVal = venueData?.venueCapacity ?: 0
 
             when {
                 date.isEmpty() -> Toast.makeText(this, "Please select a date", Toast.LENGTH_SHORT).show()
@@ -303,6 +305,9 @@ class VenueDetailsActivity : AppCompatActivity() {
                 endTime.isEmpty() -> Toast.makeText(this, "Please select end time", Toast.LENGTH_SHORT).show()
                 eventNameInput.isEmpty() -> Toast.makeText(this, "Please enter event name", Toast.LENGTH_SHORT).show()
                 attendeesInput.isEmpty() -> Toast.makeText(this, "Please enter attendees", Toast.LENGTH_SHORT).show()
+                attendeesCount > venueCapacityVal -> {
+                    Toast.makeText(this, "Attendees cannot exceed venue capacity ($venueCapacityVal)", Toast.LENGTH_LONG).show()
+                }
                 else -> {
                     submitBooking(date, startTime, endTime, purpose, eventNameInput, attendeesInput)
                     dialog.dismiss()
