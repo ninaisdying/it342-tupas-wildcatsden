@@ -37,7 +37,6 @@ class VenueAdapter(
     inner class VenueViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val venueImage: ImageView = itemView.findViewById(R.id.venueImage)
         private val venueTitle: TextView = itemView.findViewById(R.id.venueTitle)
-        private val btnFavorite: ImageButton = itemView.findViewById(R.id.btnFavorite)
 
         fun bind(venue: Venue) {
             venueTitle.text = venue.venueName
@@ -62,11 +61,7 @@ class VenueAdapter(
 
             itemView.setOnClickListener {
                 onItemClick(venue.venueId)
-            }
-
-            btnFavorite.setOnClickListener {
-                // Handle favorite toggle
-            }
+            cd
         }
     }
 }

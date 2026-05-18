@@ -163,9 +163,8 @@
                     android:layout_height="120dp"
                     android:orientation="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
             </LinearLayout>
-
-
 
         </LinearLayout>
     </ScrollView>

@@ -26,17 +26,6 @@
                 android:scaleType="centerCrop"
                 android:src="@drawable/ic_placeholder" />
 
-            <!-- Favorite Button -->
-            <ImageButton
-                android:id="@+id/btnFavorite"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:layout_margin="12dp"
-                android:layout_alignParentEnd="true"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:src="@drawable/ic_heart_outline">
-            </ImageButton>
-
         </RelativeLayout>
 
         <!-- Title -->

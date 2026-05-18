@@ -1,7 +1,6 @@
-package com.example.wildcatsden.auth.components
+package com.example.wildcatsden.auth
 
-import android.app.Dialog
-import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -11,55 +10,46 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
-import androidx.fragment.app.DialogFragment
+import androidx.appcompat.app.AppCompatActivity
+import com.example.wildcatsden.MainActivity
 import com.example.wildcatsden.R
 import com.example.wildcatsden.core.network.ApiService
 import com.example.wildcatsden.core.network.session.UserSession
 import org.json.JSONObject
 
-class SignInModal : DialogFragment() {
+class SignInActivity : AppCompatActivity() {
 
     private lateinit var etEmail: EditText
     private lateinit var etPassword: EditText
     private lateinit var btnContinue: Button
     private lateinit var tvSignUp: TextView
     private lateinit var tvError: TextView
-    private lateinit var btnClose: TextView
 
-    private var listener: SignInListener? = null
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        
+        // Initialize UserSession
+        UserSession.init(this)
+        
+        // Check if already logged in
+        if (UserSession.isLoggedIn()) {
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
+            return
+        }
 
-    interface SignInListener {
-        fun onSignInSuccess(user: JSONObject)
-        fun onSignUpClick()
-        fun onModalDismiss()
-        fun onChangePasswordRequired(user: JSONObject)
-    }
+        setContentView(R.layout.activity_signin)
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        listener = parentFragment as? SignInListener ?: context as? SignInListener
-    }
-
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val builder = AlertDialog.Builder(requireActivity())
-        val inflater = requireActivity().layoutInflater
-        val view = inflater.inflate(R.layout.modal_signin, null)
-
-        initViews(view)
+        initViews()
         setupClickListeners()
-
-        builder.setView(view)
-        return builder.create()
     }
 
-    private fun initViews(view: View) {
-        etEmail = view.findViewById(R.id.etEmail)
-        etPassword = view.findViewById(R.id.etPassword)
-        btnContinue = view.findViewById(R.id.btnContinue)
-        tvSignUp = view.findViewById(R.id.tvSignUp)
-        tvError = view.findViewById(R.id.tvError)
-        btnClose = view.findViewById(R.id.btnClose)
+    private fun initViews() {
+        etEmail = findViewById(R.id.etEmail)
+        etPassword = findViewById(R.id.etPassword)
+        btnContinue = findViewById(R.id.btnContinue)
+        tvSignUp = findViewById(R.id.tvSignUp)
+        tvError = findViewById(R.id.tvError)
     }
 
     private fun setupClickListeners() {
@@ -73,12 +63,7 @@ class SignInModal : DialogFragment() {
         }
 
         tvSignUp.setOnClickListener {
-            dismiss()
-            listener?.onSignUpClick()
-        }
-
-        btnClose.setOnClickListener {
-            dismiss()
+            startActivity(Intent(this, SignUpActivity::class.java))
         }
     }
 
@@ -108,16 +93,11 @@ class SignInModal : DialogFragment() {
     }
 
     private fun performSignIn(email: String, password: String) {
-        Log.d("SignInModal", "=== PERFORM SIGN IN ===")
-        Log.d("SignInModal", "Email: $email")
-
         btnContinue.isEnabled = false
         btnContinue.text = "Signing In..."
 
-        // Use the correct signIn method that takes email and password strings
         ApiService.signIn(email, password, object : ApiService.ApiCallback {
             override fun onSuccess(response: Any?) {
-                Log.d("SignInModal", "SignIn success: $response")
                 Handler(Looper.getMainLooper()).post {
                     try {
                         when (response) {
@@ -126,22 +106,14 @@ class SignInModal : DialogFragment() {
                                 val userJson = response.optJSONObject("user")
 
                                 if (userJson != null) {
-                                    // Save session
                                     if (token.isNotEmpty()) {
                                         UserSession.saveAuthToken(token)
                                     }
                                     UserSession.saveUser(userJson)
 
-                                    // Check if first login
-                                    if (userJson.optBoolean("firstLogin", false)) {
-                                        Toast.makeText(context, "You must change your password", Toast.LENGTH_SHORT).show()
-                                        dismiss()
-                                        listener?.onChangePasswordRequired(userJson)
-                                    } else {
-                                        Toast.makeText(context, "Login successful", Toast.LENGTH_SHORT).show()
-                                        dismiss()
-                                        listener?.onSignInSuccess(userJson)
-                                    }
+                                    Toast.makeText(this@SignInActivity, "Login successful", Toast.LENGTH_SHORT).show()
+                                    startActivity(Intent(this@SignInActivity, MainActivity::class.java))
+                                    finish()
                                 } else {
                                     showError("Invalid response: no user data")
                                     resetButton()
@@ -153,7 +125,6 @@ class SignInModal : DialogFragment() {
                             }
                         }
                     } catch (e: Exception) {
-                        Log.e("SignInModal", "Error parsing response", e)
                         showError("Error parsing response: ${e.message}")
                         resetButton()
                     }
@@ -161,7 +132,6 @@ class SignInModal : DialogFragment() {
             }
 
             override fun onError(error: String) {
-                Log.e("SignInModal", "SignIn error: $error")
                 Handler(Looper.getMainLooper()).post {
                     showError(error)
                     resetButton()
@@ -173,9 +143,5 @@ class SignInModal : DialogFragment() {
     private fun resetButton() {
         btnContinue.isEnabled = true
         btnContinue.text = "Continue"
-    }
-
-    companion object {
-        const val TAG = "SignInModal"
     }
 }

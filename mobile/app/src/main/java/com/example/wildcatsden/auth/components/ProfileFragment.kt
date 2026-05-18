@@ -1,5 +1,6 @@
 package com.example.wildcatsden.auth.components
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.wildcatsden.R
+import com.example.wildcatsden.auth.SignInActivity
 import com.example.wildcatsden.core.network.session.UserSession
 
 class ProfileFragment : Fragment() {
@@ -24,7 +26,6 @@ class ProfileFragment : Fragment() {
 
         if (UserSession.isLoggedIn()) {
             tvName.text = "User ID: ${UserSession.getUserId()}"
-            // We don't have email in session yet, but we can show something
             tvEmail.text = "Logged in as ${if (UserSession.isCustodian()) "Custodian" else "Student"}"
         } else {
             tvName.text = "Not logged in"
@@ -33,8 +34,11 @@ class ProfileFragment : Fragment() {
 
         btnLogout.setOnClickListener {
             UserSession.logout()
-            // Refresh fragment or redirect
-            activity?.recreate()
+            
+            // Redirect to Sign In and clear stack
+            val intent = Intent(requireContext(), SignInActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
         }
 
         return view

@@ -1,11 +1,11 @@
 package com.example.wildcatsden.core.network.components
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,14 +13,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.wildcatsden.EventsAdapter
 import com.example.wildcatsden.MainActivity
 import com.example.wildcatsden.R
-import com.example.wildcatsden.auth.components.SignInModal
-import com.example.wildcatsden.auth.components.SignUpModal
+import com.example.wildcatsden.auth.SignInActivity
 import com.example.wildcatsden.core.network.session.UserSession
 import com.example.wildcatsden.venues.adapter.VenueCarouselAdapter
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import org.json.JSONObject
 
-class HomeFragment : Fragment(), SignInModal.SignInListener, SignUpModal.SignUpListener {
+class HomeFragment : Fragment() {
 
     private lateinit var headerView: Header
     private lateinit var eventsRecyclerView: RecyclerView
@@ -70,19 +68,23 @@ class HomeFragment : Fragment(), SignInModal.SignInListener, SignUpModal.SignUpL
             }
 
             override fun onSignInClick() {
-                val signInModal = SignInModal()
-                signInModal.show(childFragmentManager, SignInModal.TAG)
+                // Should not happen if we enforce sign in, but for safety:
+                startActivity(Intent(requireContext(), SignInActivity::class.java))
             }
 
             override fun onSignUpClick() {
-                val signUpModal = SignUpModal()
-                signUpModal.show(childFragmentManager, SignUpModal.TAG)
+                // Handled via SignInActivity
             }
 
             override fun onLogoutClick() {
                 UserSession.logout()
                 headerView.updateLoginState(false)
                 Toast.makeText(requireContext(), "Logged out successfully", Toast.LENGTH_SHORT).show()
+                
+                // Redirect to Sign In and clear stack
+                val intent = Intent(requireContext(), SignInActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
             }
 
             override fun onProfileClick() {
@@ -124,33 +126,4 @@ class HomeFragment : Fragment(), SignInModal.SignInListener, SignUpModal.SignUpL
         eventsRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         eventsRecyclerView.adapter = EventsAdapter(eventImages)
     }
-
-    // SignInListener callbacks
-    override fun onSignInSuccess(user: JSONObject) {
-        headerView.updateLoginState(true, user.optString("userType").lowercase() == "custodian")
-        Toast.makeText(requireContext(), "Welcome, ${user.optString("firstName")}!", Toast.LENGTH_SHORT).show()
-    }
-
-    override fun onChangePasswordRequired(user: JSONObject) {
-        Toast.makeText(requireContext(), "Please change your password", Toast.LENGTH_SHORT).show()
-    }
-
-    override fun onSignUpClick() {
-        val signUpModal = SignUpModal()
-        signUpModal.show(childFragmentManager, SignUpModal.TAG)
-    }
-
-    // SignUpListener callbacks
-    override fun onSignUpSuccess() {
-        Toast.makeText(requireContext(), "Account created! Please sign in.", Toast.LENGTH_SHORT).show()
-        val signInModal = SignInModal()
-        signInModal.show(childFragmentManager, SignInModal.TAG)
-    }
-
-    override fun onSignInClick() {
-        val signInModal = SignInModal()
-        signInModal.show(childFragmentManager, SignInModal.TAG)
-    }
-
-    override fun onModalDismiss() {}
 }

@@ -9,7 +9,6 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
-import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -17,7 +16,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.example.wildcatsden.R
-import com.example.wildcatsden.auth.components.SignInModal
+import com.example.wildcatsden.auth.SignInActivity
 import com.example.wildcatsden.core.network.ApiService
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.chip.Chip
@@ -363,8 +362,8 @@ class VenueDetailsActivity : AppCompatActivity() {
             .setTitle("Login Required")
             .setMessage("Please sign in to book this venue")
             .setPositiveButton("Sign In") { _, _ ->
-                val signInModal = SignInModal()
-                signInModal.show(supportFragmentManager, SignInModal.TAG)
+                val intent = Intent(this, SignInActivity::class.java)
+                startActivity(intent)
             }
             .setNegativeButton("Cancel", null)
             .show()
