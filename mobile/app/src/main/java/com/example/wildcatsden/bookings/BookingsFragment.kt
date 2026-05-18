@@ -215,7 +215,10 @@ class BookingsFragment : Fragment() {
             .setView(dialogView)
             .create()
 
-        btnCancel.setOnClickListener { dialog.dismiss() }
+        btnCancel.setOnClickListener { 
+            hideKeyboard()
+            dialog.dismiss() 
+        }
         btnSubmit.setOnClickListener {
             val attendeesInput = etAttendees.text.toString()
             val attendeesCount = attendeesInput.toIntOrNull() ?: 0
@@ -248,6 +251,7 @@ class BookingsFragment : Fragment() {
     }
 
     private fun saveBookingChanges(bookingId: Long, data: JSONObject, dialog: AlertDialog) {
+        hideKeyboard()
         progressBar.visibility = View.VISIBLE
         ApiService.updateBooking(bookingId, data, object : ApiCallback {
             override fun onSuccess(response: Any?) {
@@ -266,6 +270,14 @@ class BookingsFragment : Fragment() {
                 }
             }
         })
+    }
+
+    private fun hideKeyboard() {
+        val view = activity?.currentFocus
+        if (view != null) {
+            val imm = activity?.getSystemService(android.content.Context.INPUT_METHOD_SERVICE) as? android.view.inputmethod.InputMethodManager
+            imm?.hideSoftInputFromWindow(view.windowToken, 0)
+        }
     }
 
     private fun jsonToBooking(obj: JSONObject): Booking {

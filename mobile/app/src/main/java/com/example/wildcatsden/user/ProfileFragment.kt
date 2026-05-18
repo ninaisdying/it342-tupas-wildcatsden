@@ -1,4 +1,4 @@
-package com.example.wildcatsden.auth.components
+package com.example.wildcatsden.user
 
 import android.app.Activity
 import android.content.Intent
@@ -70,13 +70,13 @@ class ProfileFragment : Fragment() {
 
     private fun loadUserData() {
         val user = UserSession.getUser() ?: return
-        
+
         tvName.text = "${user.optString("firstName")} ${user.optString("lastName")}"
         tvEmail.text = user.optString("email")
         tvUserType.text = user.optString("userType").uppercase()
         tvAbout.text = user.optString("about").takeIf { it.isNotEmpty() && it != "null" } ?: "No information provided"
         tvLocation.text = user.optString("location").takeIf { it.isNotEmpty() && it != "null" } ?: "No location provided"
-        
+
         val firstLogin = user.optBoolean("firstLogin", false)
         tvStatus.text = if (firstLogin) "First Login - Please change password" else "Active"
         tvStatus.setTextColor(if (firstLogin) 0xFFFFC107.toInt() else 0xFF28A745.toInt())
@@ -114,7 +114,7 @@ class ProfileFragment : Fragment() {
     private fun showEditProfileDialog() {
         val user = UserSession.getUser() ?: return
         val dialogView = layoutInflater.inflate(R.layout.dialog_edit_profile, null)
-        
+
         val etFirstName = dialogView.findViewById<TextInputEditText>(R.id.etFirstName)
         val etLastName = dialogView.findViewById<TextInputEditText>(R.id.etLastName)
         val etAbout = dialogView.findViewById<TextInputEditText>(R.id.etAbout)
@@ -193,7 +193,7 @@ class ProfileFragment : Fragment() {
             val fileName = "profile_${UserSession.getUserId()}.jpg"
 
             Toast.makeText(requireContext(), "Uploading photo...", Toast.LENGTH_SHORT).show()
-            
+
             ApiService.updateProfilePhoto(UserSession.getUserId(), bytes, fileName, object : ApiService.ApiCallback {
                 override fun onSuccess(response: Any?) {
                     activity?.runOnUiThread {

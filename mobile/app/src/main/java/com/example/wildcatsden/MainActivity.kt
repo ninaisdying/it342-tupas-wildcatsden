@@ -3,7 +3,7 @@ package com.example.wildcatsden
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.example.wildcatsden.auth.components.ProfileFragment
+import com.example.wildcatsden.user.ProfileFragment
 import com.example.wildcatsden.bookings.BookingsFragment
 import com.example.wildcatsden.core.network.components.HomeFragment
 import com.example.wildcatsden.venues.VenuesFragment

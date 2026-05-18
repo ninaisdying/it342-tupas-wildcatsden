@@ -109,6 +109,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+
                 android:padding="20dp">
 
                 <TextView
@@ -155,11 +156,26 @@
                     android:layout_marginTop="4dp"
                     android:layout_marginBottom="16dp" />
 
-                <View
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Account Status"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    android:textColor="#999999"
+                    android:textAllCaps="true" />
+
+                <TextView
+                    android:id="@+id/tvStatus"
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="#F0F0F0"
-                    android:layout_marginBottom="16dp" />
+                    android:layout_height="wrap_content"
+                    android:text="Active"
+                    android:visibility="gone"
+
+                    android:textSize="16sp"
+                    android:textColor="#333333"
+                    android:layout_marginTop="4dp" />
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>
