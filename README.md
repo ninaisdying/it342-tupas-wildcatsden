@@ -2,7 +2,7 @@
 
 **IT342-G5 | Systems Integration and Architecture 1**
 
-Wildcat’s DEN is a web-based venue booking and management system designed for CIT-U students, faculty, and event organizers. It allows users to browse venues, check availability, and book spaces efficiently while providing administrators and custodians tools to manage venues and bookings.
+Wildcat’s DEN is a web and mobile-based venue booking and management system designed for CIT-U students, faculty, and event organizers. It allows users to browse venues, check availability, and book spaces efficiently while providing administrators and custodians tools to manage venues and bookings.
 
 ---
 
