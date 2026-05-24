@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.wildcatsden.R
+import com.example.wildcatsden.core.utils.ImageUtils
 import com.example.wildcatsden.venues.data.Venue
 
 class VenueAdapter(
@@ -41,17 +42,7 @@ class VenueAdapter(
         fun bind(venue: Venue) {
             venueTitle.text = venue.venueName
 
-            // Normalize image URL (backend may return relative paths)
-            val raw = venue.image
-            val resolved = if (raw.isNullOrEmpty()) null else when {
-                raw.startsWith("http") -> {
-                    if (raw.contains("localhost") || raw.contains("127.0.0.1")) {
-                        raw.replace("localhost", "10.0.2.2").replace("127.0.0.1", "10.0.2.2")
-                    } else raw
-                }
-                raw.startsWith("/") -> "http://10.0.2.2:8080" + raw
-                else -> "http://10.0.2.2:8080/" + raw
-            }
+            val resolved = ImageUtils.resolveImageUrl(venue.image)
 
             Glide.with(itemView.context)
                 .load(resolved)

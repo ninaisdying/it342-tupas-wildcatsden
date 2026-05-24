@@ -20,6 +20,7 @@ import com.example.wildcatsden.R
 import com.example.wildcatsden.auth.SignInActivity
 import com.example.wildcatsden.core.network.ApiService
 import com.example.wildcatsden.core.network.session.UserSession
+import com.example.wildcatsden.core.utils.ImageUtils
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textfield.TextInputEditText
 import org.json.JSONObject
@@ -83,7 +84,7 @@ class ProfileFragment : Fragment() {
 
         val photoUrl = user.optString("profilePhoto")
         if (photoUrl.isNotEmpty() && photoUrl != "null") {
-            val resolvedUrl = if (photoUrl.startsWith("http")) photoUrl else "http://10.0.2.2:8080$photoUrl"
+            val resolvedUrl = ImageUtils.resolveImageUrl(photoUrl)
             Glide.with(this)
                 .load(resolvedUrl)
                 .placeholder(R.drawable.ic_default_profile)

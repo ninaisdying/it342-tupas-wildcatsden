@@ -4,6 +4,7 @@ import android.util.Log
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody.Companion.toRequestBody
+import org.json.JSONArray
 import org.json.JSONObject
 import java.io.IOException
 
@@ -114,6 +115,21 @@ object ApiService {
             .build()
 
         executeRequest(request, "getUserByEmail", callback)
+    }
+
+    fun getEvents(callback: ApiCallback) {
+        val url = "$BASE_URL/events"
+
+        Log.d(TAG, "=== GET EVENTS ===")
+        Log.d(TAG, "URL: $url")
+
+        val request = Request.Builder()
+            .url(url)
+            .get()
+            .addHeader("Accept", "application/json")
+            .build()
+
+        executeRequest(request, "getEvents", callback)
     }
 
     fun updateUser(userId: Int, userData: JSONObject, callback: ApiCallback) {
@@ -356,8 +372,14 @@ object ApiService {
                             Log.d(TAG, "Success response parsed as JSON")
                             callback.onSuccess(json)
                         } catch (e: Exception) {
-                            Log.d(TAG, "Success response is not JSON, returning as string")
-                            callback.onSuccess(responseBody)
+                            try {
+                                val jsonArray = JSONArray(responseBody)
+                                Log.d(TAG, "Success response parsed as JSON array")
+                                callback.onSuccess(jsonArray)
+                            } catch (e2: Exception) {
+                                Log.d(TAG, "Success response is not JSON, returning as string")
+                                callback.onSuccess(responseBody)
+                            }
                         }
                     }
                 }

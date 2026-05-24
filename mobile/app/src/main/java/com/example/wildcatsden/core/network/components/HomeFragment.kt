@@ -10,11 +10,11 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.wildcatsden.EventsAdapter
 import com.example.wildcatsden.MainActivity
 import com.example.wildcatsden.R
 import com.example.wildcatsden.auth.SignInActivity
 import com.example.wildcatsden.core.network.session.UserSession
+import com.example.wildcatsden.events.repository.EventRepository
 import com.example.wildcatsden.venues.adapter.VenueCarouselAdapter
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
@@ -25,17 +25,18 @@ class HomeFragment : Fragment() {
     private lateinit var venueCarouselRecyclerView: RecyclerView
     private lateinit var btnFindVenue: Button
 
+    private val eventRepository = EventRepository()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
-        
+
         initViews(view)
         setupHeaderListener()
         setupClickListeners()
         setupVenueCarousel()
-        setupEventsGrid()
 
         // Check if user is already logged in
         if (UserSession.isLoggedIn()) {
@@ -64,7 +65,7 @@ class HomeFragment : Fragment() {
             }
 
             override fun onFaqClick() {
-                Toast.makeText(requireContext(), "FAQ clicked", Toast.LENGTH_SHORT).show()
+                //Deleted footer
             }
 
             override fun onSignInClick() {
@@ -80,7 +81,7 @@ class HomeFragment : Fragment() {
                 UserSession.logout()
                 headerView.updateLoginState(false)
                 Toast.makeText(requireContext(), "Logged out successfully", Toast.LENGTH_SHORT).show()
-                
+
                 // Redirect to Sign In and clear stack
                 val intent = Intent(requireContext(), SignInActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -115,15 +116,5 @@ class HomeFragment : Fragment() {
         venueCarouselRecyclerView.adapter = VenueCarouselAdapter(carouselImages)
     }
 
-    private fun setupEventsGrid() {
-        val eventImages = listOf(
-            R.drawable.event1,
-            R.drawable.event2,
-            R.drawable.event3,
-            R.drawable.event4
-        )
 
-        eventsRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        eventsRecyclerView.adapter = EventsAdapter(eventImages)
-    }
 }

@@ -23,6 +23,7 @@ import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.textfield.TextInputEditText
 import com.example.wildcatsden.core.network.session.UserSession
+import com.example.wildcatsden.core.utils.ImageUtils
 import com.example.wildcatsden.venues.data.Venue
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -58,7 +59,6 @@ class VenueDetailsActivity : AppCompatActivity() {
 
     companion object {
         private const val BASE_URL = "http://10.0.2.2:8080/api/venues"
-        private const val IMAGE_BASE = "http://10.0.2.2:8080"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -183,18 +183,7 @@ class VenueDetailsActivity : AppCompatActivity() {
 
         custodianName.text = venue.custodianName ?: "Campus Facilities"
 
-        // Load main image (normalize relative paths)
-        val raw = venue.image
-        val resolved = if (raw.isNullOrEmpty()) null else when {
-            raw.startsWith("http") -> {
-                // Replace localhost with emulator host if needed
-                if (raw.contains("localhost") || raw.contains("127.0.0.1")) {
-                    raw.replace("localhost", "10.0.2.2").replace("127.0.0.1", "10.0.2.2")
-                } else raw
-            }
-            raw.startsWith("/") -> IMAGE_BASE + raw
-            else -> IMAGE_BASE + "/" + raw
-        }
+        val resolved = ImageUtils.resolveImageUrl(venue.image)
         android.util.Log.d("VenueDetails", "Resolved image URL: $resolved")
         Glide.with(this)
             .load(resolved)

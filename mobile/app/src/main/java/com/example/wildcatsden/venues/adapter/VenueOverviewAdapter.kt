@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.wildcatsden.R
+import com.example.wildcatsden.core.utils.ImageUtils
 import com.example.wildcatsden.venues.data.Venue
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
@@ -49,16 +50,7 @@ class VenueOverviewAdapter : RecyclerView.Adapter<VenueOverviewAdapter.ViewHolde
             venueDescription.text = venue.description ?: "No description available"
             custodianText.text = "Custodian: ${venue.custodianName ?: "Not assigned"}"
 
-            val resolvedImage = when {
-                venue.image.isNullOrEmpty() -> null
-                venue.image.startsWith("http") -> {
-                    if (venue.image.contains("localhost") || venue.image.contains("127.0.0.1")) {
-                        venue.image.replace("localhost", "10.0.2.2").replace("127.0.0.1", "10.0.2.2")
-                    } else venue.image
-                }
-                venue.image.startsWith("/") -> "http://10.0.2.2:8080" + venue.image
-                else -> "http://10.0.2.2:8080/" + venue.image
-            }
+            val resolvedImage = ImageUtils.resolveImageUrl(venue.image)
 
             Glide.with(itemView.context)
                 .load(resolvedImage)
