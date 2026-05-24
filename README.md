@@ -47,6 +47,9 @@ Wildcat’s DEN is a web-based venue booking and management system designed for 
 # Clone repository
 git clone [https://github.com/your-username/wildcats-den.git](https://github.com/NinaIsDying/IT342-Tupas-WildcatsDEN]
 
+# IMPORTANT! 
+# Go to /backend/wildcatsden/src/main/java/edu/cit/tupas and run WildcatsdenApplication.java
+
 # Navigate to project
 cd web
 cd wildcats-den
