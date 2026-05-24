@@ -4,6 +4,7 @@ import android.util.Log
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody.Companion.toRequestBody
+import org.json.JSONArray
 import org.json.JSONObject
 import java.io.IOException
 
@@ -116,6 +117,21 @@ object ApiService {
         executeRequest(request, "getUserByEmail", callback)
     }
 
+    fun getEvents(callback: ApiCallback) {
+        val url = "$BASE_URL/events"
+
+        Log.d(TAG, "=== GET EVENTS ===")
+        Log.d(TAG, "URL: $url")
+
+        val request = Request.Builder()
+            .url(url)
+            .get()
+            .addHeader("Accept", "application/json")
+            .build()
+
+        executeRequest(request, "getEvents", callback)
+    }
+
     fun updateUser(userId: Int, userData: JSONObject, callback: ApiCallback) {
         val url = "$BASE_URL/users/$userId"
 
@@ -156,6 +172,27 @@ object ApiService {
         executeRequest(request, "changePassword", callback)
     }
 
+    fun updateProfilePhoto(userId: Int, imageBytes: ByteArray, fileName: String, callback: ApiCallback) {
+        val url = "$BASE_URL/users/$userId/profile-photo"
+
+        val body = MultipartBody.Builder()
+            .setType(MultipartBody.FORM)
+            .addFormDataPart(
+                "photo",
+                fileName,
+                imageBytes.toRequestBody("image/*".toMediaType())
+            )
+            .build()
+
+        val request = Request.Builder()
+            .url(url)
+            .put(body)
+            .addHeader("Accept", "application/json")
+            .build()
+
+        executeRequest(request, "updateProfilePhoto", callback)
+    }
+
     // Booking APIs
     fun createBooking(bookingData: JSONObject, userId: Int, callback: ApiCallback) {
         val url = "$BASE_URL/bookings?userId=$userId"
@@ -189,6 +226,45 @@ object ApiService {
             .build()
 
         executeRequest(request, "getUserBookings", callback)
+    }
+
+    fun updateBooking(bookingId: Long, bookingData: JSONObject, callback: ApiCallback) {
+        val url = "$BASE_URL/bookings/$bookingId"
+
+        Log.d(TAG, "=== UPDATE BOOKING ===")
+        Log.d(TAG, "URL: $url")
+        Log.d(TAG, "Booking ID: $bookingId")
+        Log.d(TAG, "Data: $bookingData")
+
+        val request = Request.Builder()
+            .url(url)
+            .put(bookingData.toString().toRequestBody(JSON))
+            .addHeader("Content-Type", "application/json")
+            .addHeader("Accept", "application/json")
+            .build()
+
+        executeRequest(request, "updateBooking", callback)
+    }
+
+    fun updateBookingStatus(bookingId: Long, status: String, callback: ApiCallback) {
+        val url = "$BASE_URL/bookings/$bookingId/status"
+        val json = JSONObject().apply {
+            put("status", status)
+        }
+
+        Log.d(TAG, "=== UPDATE BOOKING STATUS ===")
+        Log.d(TAG, "URL: $url")
+        Log.d(TAG, "Booking ID: $bookingId")
+        Log.d(TAG, "Status: $status")
+
+        val request = Request.Builder()
+            .url(url)
+            .put(json.toString().toRequestBody(JSON))
+            .addHeader("Content-Type", "application/json")
+            .addHeader("Accept", "application/json")
+            .build()
+
+        executeRequest(request, "updateBookingStatus", callback)
     }
 
     // Admin: Create user
@@ -296,8 +372,14 @@ object ApiService {
                             Log.d(TAG, "Success response parsed as JSON")
                             callback.onSuccess(json)
                         } catch (e: Exception) {
-                            Log.d(TAG, "Success response is not JSON, returning as string")
-                            callback.onSuccess(responseBody)
+                            try {
+                                val jsonArray = JSONArray(responseBody)
+                                Log.d(TAG, "Success response parsed as JSON array")
+                                callback.onSuccess(jsonArray)
+                            } catch (e2: Exception) {
+                                Log.d(TAG, "Success response is not JSON, returning as string")
+                                callback.onSuccess(responseBody)
+                            }
                         }
                     }
                 }

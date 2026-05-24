@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">WildcatsDen</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="booking_guide">1. Select a venue from the venues screen &#10;2. Click "Book Now" &#10;3. Enter valid Event Details &#10;4. Wait for confirmation from the custodian that your booking is approved or cancelled &#10; &#10;For concerns or inquiries, contact us through our email <u>@wildcatsden-support@gmail.com</u>
+    </string>
 </resources>

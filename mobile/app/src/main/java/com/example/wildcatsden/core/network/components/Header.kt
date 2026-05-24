@@ -9,10 +9,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.view.isVisible
-import androidx.fragment.app.FragmentActivity
 import com.example.wildcatsden.R
-import com.example.wildcatsden.auth.components.SignInModal
-import com.example.wildcatsden.auth.components.SignUpModal
 
 class Header @JvmOverloads constructor(
     context: Context,
@@ -81,33 +78,15 @@ class Header @JvmOverloads constructor(
         btnFaq.setOnClickListener { listener?.onFaqClick() }
 
         btnSignIn.setOnClickListener {
-            showSignInModal()
             listener?.onSignInClick()
         }
 
         btnSignUp.setOnClickListener {
-            showSignUpModal()
             listener?.onSignUpClick()
         }
 
         btnLogout.setOnClickListener { listener?.onLogoutClick() }
         btnProfile.setOnClickListener { listener?.onProfileClick() }
-    }
-
-    private fun showSignInModal() {
-        val activity = context as? FragmentActivity
-        activity?.supportFragmentManager?.let { fragmentManager ->
-            val signInModal = SignInModal()
-            signInModal.show(fragmentManager, SignInModal.TAG)
-        }
-    }
-
-    private fun showSignUpModal() {
-        val activity = context as? FragmentActivity
-        activity?.supportFragmentManager?.let { fragmentManager ->
-            val signUpModal = SignUpModal()
-            signUpModal.show(fragmentManager, SignUpModal.TAG)
-        }
     }
 
     fun updateLoginState(loggedIn: Boolean, isCustodianUser: Boolean = false) {
@@ -122,7 +101,4 @@ class Header @JvmOverloads constructor(
         }
     }
 
-    fun updateProfilePhoto(photoUrl: String?) {
-        // Load image using Glide or Coil when available
-    }
 }

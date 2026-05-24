@@ -12,7 +12,7 @@ class VenueCarouselAdapter(
 ) : RecyclerView.Adapter<VenueCarouselAdapter.ViewHolder>() {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val imageView: ImageView = itemView.findViewById(R.id.imageVenue)
+        val imageView: ImageView = itemView.findViewById(R.id.venueImage)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

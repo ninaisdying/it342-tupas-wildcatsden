@@ -1,19 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F7F7F7"
-    android:padding="16dp">
+    android:fillViewport="true"
+    android:background="#F7F7F7">
 
     <LinearLayout
+        android:id="@+id/venue_description_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="16dp">
+
 
         <!-- Back Button -->
-        <ImageButton
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageButton
             android:id="@+id/btnBack"
             android:layout_width="40dp"
             android:layout_height="40dp"
@@ -22,24 +29,26 @@
             android:src="@drawable/ic_back"
             />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Venue Overview"
+                android:textColor="#7B282A"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp" />
+
+        </LinearLayout>
+
+
         <!-- Gallery -->
         <include layout="@layout/view_venue_gallery" />
 
-        <!-- Bottom Section -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:orientation="vertical">
+        <!-- Description and Details -->
+        <include
+            android:id="@+id/venue_description_content"
+            layout="@layout/view_venue_description" />
 
-            <!-- Left Column - Description -->
-            <include layout="@layout/view_venue_description" />
 
-            <!-- Right Column - Booking Card -->
-            <include layout="@layout/view_venue_booking_card"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp" />
-        </LinearLayout>
     </LinearLayout>
 </ScrollView>

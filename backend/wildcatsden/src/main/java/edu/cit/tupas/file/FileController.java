@@ -12,7 +12,13 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.Map;
 
 import jakarta.servlet.http.HttpServletRequest;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 
 @RestController
@@ -63,6 +69,49 @@ public class FileController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @GetMapping("/proxy")
+    public ResponseEntity<byte[]> proxyFile(@RequestParam("url") String encodedUrl) {
+        try {
+            String targetUrl = new String(java.util.Base64.getUrlDecoder().decode(encodedUrl), StandardCharsets.UTF_8);
+            URL url = new URL(targetUrl);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            connection.setConnectTimeout(15000);
+            connection.setReadTimeout(15000);
+            connection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36");
+            connection.setRequestProperty("Accept", "image/avif,image/webp,image/apng,image/*,*/*;q=0.8");
+            connection.setRequestProperty("Referer", "https://www.facebook.com/");
+            connection.setRequestProperty("Origin", "https://www.facebook.com");
+
+            int responseCode = connection.getResponseCode();
+            if (responseCode != HttpURLConnection.HTTP_OK) {
+                return ResponseEntity.status(responseCode).build();
+            }
+
+            String contentType = connection.getContentType();
+            if (contentType == null) {
+                contentType = MediaType.APPLICATION_OCTET_STREAM_VALUE;
+            }
+
+            try (InputStream inputStream = connection.getInputStream();
+                 ByteArrayOutputStream buffer = new ByteArrayOutputStream()) {
+                byte[] data = new byte[8192];
+                int n;
+                while ((n = inputStream.read(data, 0, data.length)) != -1) {
+                    buffer.write(data, 0, n);
+                }
+                buffer.flush();
+                return ResponseEntity.ok()
+                        .contentType(MediaType.parseMediaType(contentType))
+                        .body(buffer.toByteArray());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
     @PostMapping("/upload")
     public ResponseEntity<Map<String, String>> uploadFile(@RequestParam("file") MultipartFile file) {
         try {

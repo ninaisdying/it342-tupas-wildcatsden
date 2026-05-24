@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.wildcatsden.R
+import com.example.wildcatsden.core.utils.ImageUtils
 import com.example.wildcatsden.venues.data.Venue
 
 class VenueAdapter(
@@ -37,22 +38,20 @@ class VenueAdapter(
     inner class VenueViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val venueImage: ImageView = itemView.findViewById(R.id.venueImage)
         private val venueTitle: TextView = itemView.findViewById(R.id.venueTitle)
-        private val btnFavorite: ImageButton = itemView.findViewById(R.id.btnFavorite)
 
         fun bind(venue: Venue) {
             venueTitle.text = venue.venueName
 
+            val resolved = ImageUtils.resolveImageUrl(venue.image)
+
             Glide.with(itemView.context)
-                .load(venue.image)
+                .load(resolved)
                 .placeholder(R.drawable.ic_placeholder)
+                .error(R.drawable.ic_placeholder)
                 .into(venueImage)
 
             itemView.setOnClickListener {
                 onItemClick(venue.venueId)
-            }
-
-            btnFavorite.setOnClickListener {
-                // Handle favorite toggle
             }
         }
     }

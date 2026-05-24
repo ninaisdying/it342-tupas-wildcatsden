@@ -1,20 +1,18 @@
-package com.example.wildcatsden.auth.components
+package com.example.wildcatsden.auth
 
-import android.app.Dialog
-import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.widget.*
-import androidx.appcompat.app.AlertDialog
-import androidx.fragment.app.DialogFragment
+import androidx.appcompat.app.AppCompatActivity
 import com.example.wildcatsden.R
 import com.example.wildcatsden.core.network.ApiService
 import org.json.JSONObject
 
-class SignUpModal : DialogFragment() {
+class SignUpActivity : AppCompatActivity() {
 
     private lateinit var etFirstName: EditText
     private lateinit var etLastName: EditText
@@ -32,57 +30,38 @@ class SignUpModal : DialogFragment() {
     private lateinit var btnCreateAccount: Button
     private lateinit var tvSignIn: TextView
     private lateinit var tvError: TextView
-    private lateinit var btnClose: TextView
 
-    private var listener: SignUpListener? = null
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_signup)
 
-    interface SignUpListener {
-        fun onSignUpSuccess()
-        fun onSignInClick()
-        fun onModalDismiss()
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        listener = parentFragment as? SignUpListener ?: context as? SignUpListener
-    }
-
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val builder = AlertDialog.Builder(requireActivity())
-        val inflater = requireActivity().layoutInflater
-        val view = inflater.inflate(R.layout.modal_signup, null)
-
-        initViews(view)
+        initViews()
         setupSpinner()
         setupClickListeners()
-
-        builder.setView(view)
-        return builder.create()
     }
 
-    private fun initViews(view: View) {
-        etFirstName = view.findViewById(R.id.etFirstName)
-        etLastName = view.findViewById(R.id.etLastName)
-        etEmail = view.findViewById(R.id.etEmail)
-        etPassword = view.findViewById(R.id.etPassword)
-        etConfirmPassword = view.findViewById(R.id.etConfirmPassword)
-        spinnerUserType = view.findViewById(R.id.spinnerUserType)
-        layoutStudent = view.findViewById(R.id.layoutStudent)
-        layoutCoordinator = view.findViewById(R.id.layoutCoordinator)
-        layoutFaculty = view.findViewById(R.id.layoutFaculty)
-        etCourse = view.findViewById(R.id.etCourse)
-        etOrganization = view.findViewById(R.id.etOrganization)
-        etAffiliation = view.findViewById(R.id.etAffiliation)
-        etDepartment = view.findViewById(R.id.etDepartment)
-        btnCreateAccount = view.findViewById(R.id.btnCreateAccount)
-        tvSignIn = view.findViewById(R.id.tvSignIn)
-        tvError = view.findViewById(R.id.tvError)
-        btnClose = view.findViewById(R.id.btnClose)
+    private fun initViews() {
+        etFirstName = findViewById(R.id.etFirstName)
+        etLastName = findViewById(R.id.etLastName)
+        etEmail = findViewById(R.id.etEmail)
+        etPassword = findViewById(R.id.etPassword)
+        etConfirmPassword = findViewById(R.id.etConfirmPassword)
+        spinnerUserType = findViewById(R.id.spinnerUserType)
+        layoutStudent = findViewById(R.id.layoutStudent)
+        layoutCoordinator = findViewById(R.id.layoutCoordinator)
+        layoutFaculty = findViewById(R.id.layoutFaculty)
+        etCourse = findViewById(R.id.etCourse)
+        etOrganization = findViewById(R.id.etOrganization)
+        etAffiliation = findViewById(R.id.etAffiliation)
+        etDepartment = findViewById(R.id.etDepartment)
+        btnCreateAccount = findViewById(R.id.btnCreateAccount)
+        tvSignIn = findViewById(R.id.tvSignIn)
+        tvError = findViewById(R.id.tvError)
     }
 
     private fun setupSpinner() {
         val userTypes = arrayOf("Select Role", "Student", "Coordinator", "Faculty")
-        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, userTypes)
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, userTypes)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerUserType.adapter = adapter
 
@@ -124,12 +103,7 @@ class SignUpModal : DialogFragment() {
         }
 
         tvSignIn.setOnClickListener {
-            dismiss()
-            listener?.onSignInClick()
-        }
-
-        btnClose.setOnClickListener {
-            dismiss()
+            finish() // Go back to Sign In Activity
         }
     }
 
@@ -182,30 +156,25 @@ class SignUpModal : DialogFragment() {
             }
         }
 
-        // Validate role-specific fields
         when (userType) {
             "Student" -> {
-                val course = etCourse.text.toString().trim()
-                val org = etOrganization.text.toString().trim()
-                if (course.isEmpty()) {
+                if (etCourse.text.toString().trim().isEmpty()) {
                     showError("Course is required for students")
                     return false
                 }
-                if (org.isEmpty()) {
+                if (etOrganization.text.toString().trim().isEmpty()) {
                     showError("Organization is required for students")
                     return false
                 }
             }
             "Coordinator" -> {
-                val affiliation = etAffiliation.text.toString().trim()
-                if (affiliation.isEmpty()) {
+                if (etAffiliation.text.toString().trim().isEmpty()) {
                     showError("Affiliation is required for coordinators")
                     return false
                 }
             }
             "Faculty" -> {
-                val department = etDepartment.text.toString().trim()
-                if (department.isEmpty()) {
+                if (etDepartment.text.toString().trim().isEmpty()) {
                     showError("Department is required for faculty")
                     return false
                 }
@@ -226,13 +195,12 @@ class SignUpModal : DialogFragment() {
 
         val selectedRole = spinnerUserType.selectedItem.toString()
 
-        // Match exactly what your backend expects
         val userData = JSONObject().apply {
             put("firstName", etFirstName.text.toString().trim())
             put("lastName", etLastName.text.toString().trim())
             put("email", etEmail.text.toString().trim())
             put("password", etPassword.text.toString().trim())
-            put("userType", selectedRole)  // Send exactly as selected
+            put("userType", selectedRole)
 
             when (selectedRole) {
                 "Student" -> {
@@ -245,26 +213,18 @@ class SignUpModal : DialogFragment() {
                 "Faculty" -> {
                     put("department", etDepartment.text.toString().trim())
                 }
-                "Custodian" -> {
-                    put("department", etDepartment.text.toString().trim())
-                }
             }
         }
 
-        Log.d("SignUpModal", "Sending signup data: $userData")
-
         ApiService.signUp(userData, object : ApiService.ApiCallback {
             override fun onSuccess(response: Any?) {
-                Log.d("SignUpModal", "SignUp success: $response")
                 Handler(Looper.getMainLooper()).post {
-                    Toast.makeText(context, "Account created successfully!", Toast.LENGTH_SHORT).show()
-                    dismiss()
-                    listener?.onSignUpSuccess()
+                    Toast.makeText(this@SignUpActivity, "Account created successfully!", Toast.LENGTH_SHORT).show()
+                    finish() // Return to Sign In
                 }
             }
 
             override fun onError(error: String) {
-                Log.e("SignUpModal", "SignUp error: $error")
                 Handler(Looper.getMainLooper()).post {
                     showError(error)
                     resetButton()
@@ -276,9 +236,5 @@ class SignUpModal : DialogFragment() {
     private fun resetButton() {
         btnCreateAccount.isEnabled = true
         btnCreateAccount.text = "Create Account"
-    }
-//    TO LOG WHO IS DOING WHAT
-    companion object {
-        const val TAG = "SignUpModal"
     }
 }

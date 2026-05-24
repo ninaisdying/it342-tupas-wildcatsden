@@ -1,33 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/modal_background"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
     android:orientation="vertical"
     android:padding="24dp">
 
-    <!-- Close Button -->
-    <FrameLayout
+    <!-- Logo and Text -->
+    <ImageView
+        android:layout_marginTop="20dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_gravity="center"
+        android:padding="0dp"
+        android:src="@drawable/logo_big"
+        android:scaleType="fitCenter"
+        >
+    </ImageView>
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:text="Wildcat's DEN"
+        android:textColor="#7B282A"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:fontFamily="@font/montserrat_bold"
+        android:textFontWeight="1000">
+    </TextView>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:text="✕"
-            android:textColor="#7B282A"
-            android:textSize="24sp"
-            android:padding="8dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:id="@+id/btnClose"/>
-    </FrameLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="One-stop Designated Events Navigator"
+        android:textColor="#7B282A"
+        android:textSize="16sp"
+        android:textAlignment="center"
+        android:fontFamily="@font/montserrat"
+        android:textFontWeight="200">
+    </TextView>
 
     <!-- Title -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
         android:text="Sign In"
         android:textColor="#7B282A"
         android:textSize="28sp"
@@ -86,14 +108,12 @@
     <!-- Continue Button -->
     <Button
         android:id="@+id/btnContinue"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Continue"
         android:backgroundTint="#7B282A"
         android:textColor="#FFFFFF"
-        android:paddingHorizontal="32dp"
         android:paddingVertical="12dp"
-        android:layout_gravity="start"
         android:layout_marginBottom="16dp"/>
 
     <!-- Divider -->
@@ -126,6 +146,6 @@
             android:clickable="true"
             android:focusable="true"
             android:padding="4dp"/>
-    </LinearLayout>
-
-</LinearLayout>
+         </LinearLayout>
+        </LinearLayout>
+    </ScrollView>

@@ -1,13 +1,16 @@
 package com.example.wildcatsden.venues.adapter
 
+import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.wildcatsden.R
+import com.example.wildcatsden.core.utils.ImageUtils
 import com.example.wildcatsden.venues.data.Venue
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
@@ -47,9 +50,12 @@ class VenueOverviewAdapter : RecyclerView.Adapter<VenueOverviewAdapter.ViewHolde
             venueDescription.text = venue.description ?: "No description available"
             custodianText.text = "Custodian: ${venue.custodianName ?: "Not assigned"}"
 
+            val resolvedImage = ImageUtils.resolveImageUrl(venue.image)
+
             Glide.with(itemView.context)
-                .load(venue.image)
+                .load(resolvedImage)
                 .placeholder(R.drawable.ic_placeholder)
+                .error(R.drawable.ic_placeholder)
                 .into(venueImage)
 
             // Display amenities (max 3)
@@ -60,8 +66,8 @@ class VenueOverviewAdapter : RecyclerView.Adapter<VenueOverviewAdapter.ViewHolde
                 val chip = Chip(itemView.context).apply {
                     text = amenity
                     isCheckable = false
-                    setChipBackgroundColorResource(R.color.primary)
-                    setTextColor(itemView.resources.getColor(android.R.color.white))
+                    chipBackgroundColor = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.primary))
+                    setTextColor(ContextCompat.getColor(context, android.R.color.white))
                 }
                 amenitiesChipGroup.addView(chip)
             }
@@ -70,8 +76,8 @@ class VenueOverviewAdapter : RecyclerView.Adapter<VenueOverviewAdapter.ViewHolde
                 val moreChip = Chip(itemView.context).apply {
                     text = "+${venue.amenities.size - 3}"
                     isCheckable = false
-                    setChipBackgroundColorResource(R.color.primary_dark)
-                    setTextColor(itemView.resources.getColor(android.R.color.white))
+                    chipBackgroundColor = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.primary_dark))
+                    setTextColor(ContextCompat.getColor(context, android.R.color.white))
                 }
                 amenitiesChipGroup.addView(moreChip)
             }
