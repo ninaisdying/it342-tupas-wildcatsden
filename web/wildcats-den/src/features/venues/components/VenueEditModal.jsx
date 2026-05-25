@@ -18,7 +18,7 @@ export default function VenueEditModal({
   useEffect(() => {
     const fetchCustodians = async () => {
       try {
-        const response = await fetch("${process.env.REACT_APP_API_URL}/users");
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/users`);
         const users = await response.json();
         const custodianList = users.filter(
           (u) => u.userType?.toLowerCase() === "custodian"
@@ -37,7 +37,7 @@ export default function VenueEditModal({
     const uploadForm = new FormData();
     uploadForm.append("file", file);
 
-    const response = await fetch("${process.env.REACT_APP_API_URL}/files/upload", {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/files/upload`, {
       method: "POST",
       body: uploadForm,
     });

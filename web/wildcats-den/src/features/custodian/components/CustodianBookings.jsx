@@ -72,7 +72,7 @@ export default function CustodianBookings() {
             return;
           }
 
-          const allBookingsResponse = await fetch('${process.env.REACT_APP_API_URL}/bookings');
+          const allBookingsResponse = await fetch(`${process.env.REACT_APP_API_URL}/bookings`);
           if (!allBookingsResponse.ok) {
             throw new Error("Failed to load bookings.");
           }

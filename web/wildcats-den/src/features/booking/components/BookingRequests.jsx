@@ -55,7 +55,7 @@ export default function BookingRequests () {
 
       try {
         console.log("Fetching ALL ADMIN bookings...");
-        const res = await fetch("${process.env.REACT_APP_API_URL}/bookings");
+        const res = await fetch(`${process.env.REACT_APP_API_URL}/bookings`);
 
         if (!res.ok) {
           const text = await res.text();

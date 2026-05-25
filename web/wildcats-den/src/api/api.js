@@ -1,13 +1,21 @@
-const API_BASE_URL = process.env.REACT_APP_API_URL || "";
+const ENV_API_URL = process.env.REACT_APP_API_URL;
+const API_BASE_URL = String(ENV_API_URL || "http://localhost:8080").replace(/\/+$/, "");
 
-if (!API_BASE_URL) {
-  console.warn('REACT_APP_API_URL is not defined. API calls will use relative paths.');
+if (!ENV_API_URL) {
+  console.warn(
+    'REACT_APP_API_URL is not defined. Defaulting to http://localhost:8080. Restart the React server if you just changed .env.'
+  );
+}
+
+function buildApiUrl(endpoint) {
+  const normalizedEndpoint = endpoint.startsWith("/") ? endpoint : `/${endpoint}`;
+  return `${API_BASE_URL}${normalizedEndpoint}`;
 }
 
 async function apiCall(endpoint, options = {}) {
   try {
     const config = {
-      credentials: 'include', 
+      credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
         ...options.headers,
@@ -19,10 +27,11 @@ async function apiCall(endpoint, options = {}) {
       config.body = JSON.stringify(options.body);
     }
 
-    console.log('🔵 MAKING API CALL:', `${API_BASE_URL}${endpoint}`);
+    const url = buildApiUrl(endpoint);
+    console.log('🔵 MAKING API CALL:', url);
     console.log('🔵 REQUEST BODY:', options.body);
 
-    const response = await fetch(`${API_BASE_URL}${endpoint}`, config);
+    const response = await fetch(url, config);
 
     console.log('🔵 RESPONSE STATUS:', response.status);
 
@@ -82,7 +91,7 @@ export const notificationAPI = {
 // Booking API
 export const bookingAPI = {
   createBooking: async (bookingData, userId) => {
-    const response = await fetch(`${API_BASE_URL}/bookings?userId=${userId}`, {
+    const response = await fetch(buildApiUrl(`/bookings?userId=${userId}`), {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -100,7 +109,7 @@ export const bookingAPI = {
   },
 
   getUserBookings: async (userId) => {
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/bookings/user/${userId}`);
+    const response = await fetch(buildApiUrl(`/bookings/user/${userId}`));
     if (!response.ok) {
       throw new Error('Failed to fetch bookings');
     }
@@ -109,7 +118,7 @@ export const bookingAPI = {
   
   // Get bookings for custodian's venues
   getCustodianBookings: async (custodianId) => {
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/bookings/custodian/${custodianId}`);
+    const response = await fetch(buildApiUrl(`/bookings/custodian/${custodianId}`));
     if (!response.ok) {
       throw new Error('Failed to fetch custodian bookings');
     }

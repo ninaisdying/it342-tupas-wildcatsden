@@ -38,7 +38,7 @@ export default function VenueOverview() {
 
   const loadVenues = async () => {
     try {
-      const response = await fetch("${process.env.REACT_APP_API_URL}/venues");
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/venues`);
       if (!response.ok) {
         const text = await response.text();
         console.error("Failed to load venues:", response.status, text);

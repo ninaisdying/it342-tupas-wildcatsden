@@ -85,7 +85,7 @@ export default function AddVenueForm({ onVenueAdded }) {
     formData.append('file', file); // Changed from 'image' to 'file'
     
     try {
-      const response = await fetch('${process.env.REACT_APP_API_URL}/files/upload', {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/files/upload`, {
         method: 'POST',
         body: formData,
         // Don't set Content-Type header, let browser set it automatically for FormData
