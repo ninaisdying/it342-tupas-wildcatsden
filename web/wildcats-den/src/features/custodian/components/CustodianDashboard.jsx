@@ -27,13 +27,13 @@ const fetchDashboardData = async () => {
   setError(null);
   try {
     // 1. Fetch my venues count
-    const venuesResponse = await fetch(`http://localhost:8080/api/venues/custodian/${user.userId}`);
+    const venuesResponse = await fetch(`${process.env.REACT_APP_API_URL}/venues/custodian/${user.userId}`);
     if (!venuesResponse.ok) throw new Error("Failed to fetch venues");
     const venues = await venuesResponse.json();
     setMyVenuesCount(Array.isArray(venues) ? venues.length : 0);
 
     // 2. Fetch all bookings for custodian
-    const bookingsResponse = await fetch(`http://localhost:8080/api/bookings`);
+    const bookingsResponse = await fetch(`${process.env.REACT_APP_API_URL}/bookings`);
     if (!bookingsResponse.ok) throw new Error("Failed to fetch bookings");
     const allBookings = await bookingsResponse.json();
 

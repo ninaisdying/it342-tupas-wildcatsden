@@ -57,7 +57,7 @@ export default function BookingForm({ venueId, venueData, onClose }) {
   const fetchExistingBookings = async () => {
     try {
       setLoadingBookings(true);
-      const response = await fetch(`http://localhost:8080/api/bookings/venue/${venueId}`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/bookings/venue/${venueId}`);
       
       if (response.ok) {
         const bookings = await response.json();
@@ -268,7 +268,7 @@ export default function BookingForm({ venueId, venueData, onClose }) {
 
       console.log('🔵 Sending booking data:', JSON.stringify(bookingData, null, 2));
 
-      const response = await fetch(`http://localhost:8080/api/bookings?userId=${currentUser.userId}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/bookings?userId=${currentUser.userId}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -53,7 +53,7 @@ export default function UserManagement() {
   const loadUsers = async () => {
     try {
       const response = await fetch(
-        `http://localhost:8080/api/users/paged?page=${page}&size=${size}`
+        `${process.env.REACT_APP_API_URL}/users/paged?page=${page}&size=${size}`
       );
       const data = await response.json();
 
@@ -126,7 +126,7 @@ export default function UserManagement() {
 
   const finalizeBulkDelete = async () => {
     for (const user of pendingDeleteUsers) {
-      await fetch(`http://localhost:8080/api/users/${user.userId}`, {
+      await fetch(`${process.env.REACT_APP_API_URL}/users/${user.userId}`, {
         method: "DELETE",
       });
     }
@@ -146,7 +146,7 @@ export default function UserManagement() {
 
   // SINGLE DELETE
   const deleteUser = async () => {
-    await fetch(`http://localhost:8080/api/users/${deleteUserId}`, {
+    await fetch(`${process.env.REACT_APP_API_URL}/users/${deleteUserId}`, {
       method: "DELETE",
     });
     setShowDeleteModal(false);

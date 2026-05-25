@@ -76,7 +76,7 @@ export default function ManageVenues({ searchQuery, venues, loading, onVenueUpda
     if (!deleteVenueId) return;
 
     try {
-      const response = await fetch(`http://localhost:8080/api/venues/${deleteVenueId}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/venues/${deleteVenueId}`, {
         method: "DELETE",
       });
 

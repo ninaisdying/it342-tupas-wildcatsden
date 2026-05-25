@@ -45,7 +45,7 @@ export default function VenueBookingCard({ venueId, venueData, onOpenLoginModal 
           setVenue(venueData);
           setLoading(false);
         } else {
-          const response = await fetch(`http://localhost:8080/api/venues/${venueId}`);
+          const response = await fetch(`${process.env.REACT_APP_API_URL}/venues/${venueId}`);
           if (response.ok) {
             const venueFromApi = await response.json();
             setVenue(venueFromApi);

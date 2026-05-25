@@ -149,7 +149,7 @@ function EditForm({ user, onSave, onCancel, showSuccessModal, showErrorModal }) 
         photoFormData.append("photo", photoFile);
 
         const response = await fetch(
-          `http://localhost:8080/api/users/${user.userId}/profile-photo`,
+          `${process.env.REACT_APP_API_URL}/users/${user.userId}/profile-photo`,
           { method: "PUT", body: photoFormData }
         );
 

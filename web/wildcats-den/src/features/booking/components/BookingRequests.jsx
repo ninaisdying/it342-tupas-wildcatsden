@@ -55,7 +55,7 @@ export default function BookingRequests () {
 
       try {
         console.log("Fetching ALL ADMIN bookings...");
-        const res = await fetch("http://localhost:8080/api/bookings");
+        const res = await fetch("${process.env.REACT_APP_API_URL}/bookings");
 
         if (!res.ok) {
           const text = await res.text();
@@ -138,7 +138,7 @@ export default function BookingRequests () {
       console.log("Updating booking:", bookingId, "→", newStatus);
 
       const res = await fetch(
-        `http://localhost:8080/api/bookings/${bookingId}/status`,
+        `${process.env.REACT_APP_API_URL}/bookings/${bookingId}/status`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },

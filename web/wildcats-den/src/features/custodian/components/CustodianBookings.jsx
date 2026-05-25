@@ -60,7 +60,7 @@ export default function CustodianBookings() {
           console.log('🔵 Custodian Bookings - Fetching bookings for custodian:', user.userId);
           
           // First, fetch venues managed by this custodian
-          const venuesResponse = await fetch(`http://localhost:8080/api/venues/custodian/${user.userId}`);
+          const venuesResponse = await fetch(`${process.env.REACT_APP_API_URL}/venues/custodian/${user.userId}`);
           if (!venuesResponse.ok) {
             throw new Error("Failed to load custodian venues.");
           }
@@ -72,7 +72,7 @@ export default function CustodianBookings() {
             return;
           }
 
-          const allBookingsResponse = await fetch('http://localhost:8080/api/bookings');
+          const allBookingsResponse = await fetch('${process.env.REACT_APP_API_URL}/bookings');
           if (!allBookingsResponse.ok) {
             throw new Error("Failed to load bookings.");
           }
@@ -192,7 +192,7 @@ export default function CustodianBookings() {
     try {
       const cancelledBy = newStatus === "canceled" ? "custodian" : null;
       
-      const response = await fetch(`http://localhost:8080/api/bookings/${bookingId}/status`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/bookings/${bookingId}/status`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

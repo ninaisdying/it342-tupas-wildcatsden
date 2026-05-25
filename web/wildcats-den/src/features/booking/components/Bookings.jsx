@@ -58,7 +58,7 @@ export default function Bookings() {
       try {
         console.log('🔵 Bookings - Fetching bookings for user:', user.userId);
         
-        const response = await fetch(`http://localhost:8080/api/bookings/user/${user.userId}`);
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/bookings/user/${user.userId}`);
         
         console.log('🔵 Response status:', response.status);
         
@@ -166,7 +166,7 @@ export default function Bookings() {
 
   const handleCancelBooking = async (bookingId) => {
     try {
-      const response = await fetch(`http://localhost:8080/api/bookings/${bookingId}/status`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/bookings/${bookingId}/status`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

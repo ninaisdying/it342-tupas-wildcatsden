@@ -146,7 +146,7 @@ export default function EditVenueModal({ venue, onClose, onUpdate }) {
     });
 
     console.log('Sending update request...');
-    const response = await fetch(`http://localhost:8080/api/venues/${venue.venueId}`, {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/venues/${venue.venueId}`, {
       method: "PUT",
       body: formDataToSend
     });

@@ -32,7 +32,7 @@ export default function ProfileDetails() {
 
     setIsUploading(true);
     try {
-      const response = await fetch(`http://localhost:8080/api/users/${user.userId}/profile-photo`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/users/${user.userId}/profile-photo`, {
         method: "PUT",
         body: formData,
       });

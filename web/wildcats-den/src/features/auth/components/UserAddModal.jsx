@@ -80,7 +80,7 @@ export default function UserAddModal({ onClose, onSave }) {
     };
 
     try {
-      const res = await fetch(`http://localhost:8080/api${endpoint}`, {
+      const res = await fetch(`${process.env.REACT_APP_API_URL}${endpoint}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),

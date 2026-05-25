@@ -20,7 +20,7 @@ export default function VenuesGrid({ searchQuery, showFilters, filters }) {
   const fetchVenues = async () => {
     try {
       setLoading(true);
-      const response = await fetch('http://localhost:8080/api/venues');
+      const response = await fetch('${process.env.REACT_APP_API_URL}/venues');
       
       if (response.ok) {
         const venuesData = await response.json();

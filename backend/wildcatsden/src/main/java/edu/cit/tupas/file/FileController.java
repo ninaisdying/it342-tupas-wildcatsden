@@ -123,7 +123,7 @@ public class FileController {
             String fileName = fileStorageService.storeFile(file);
             
             // Construct the full URL
-            String fileUrl = "http://localhost:8080/api/files/uploads/" + fileName;
+            String fileUrl = "${process.env.REACT_APP_API_URL}/files/uploads/" + fileName;
             
             System.out.println("✅ File uploaded successfully: " + fileName);
             System.out.println("📁 File URL: " + fileUrl);

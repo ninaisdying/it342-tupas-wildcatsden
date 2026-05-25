@@ -97,7 +97,7 @@ public class UserController {
         try {
             // Upload the file
             String fileName = fileStorageService.storeFile(photoFile);
-            String photoUrl = "http://localhost:8080/api/files/uploads/" + fileName;
+            String photoUrl = "${process.env.REACT_APP_API_URL}/files/uploads/" + fileName;
             
             // Update user's profile photo
             UserEntity user = userService.getUserById(id)
@@ -155,7 +155,7 @@ public class UserController {
             if (photoFile != null && !photoFile.isEmpty()) {
                 // Upload new photo
                 String fileName = fileStorageService.storeFile(photoFile);
-                finalPhotoUrl = "http://localhost:8080/api/files/uploads/" + fileName;
+                finalPhotoUrl = "${process.env.REACT_APP_API_URL}/files/uploads/" + fileName;
                 System.out.println("✅ Uploaded new profile photo: " + finalPhotoUrl);
             } else if (photoUrl != null && !photoUrl.trim().isEmpty()) {
                 // Use provided URL

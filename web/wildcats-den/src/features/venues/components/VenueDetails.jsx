@@ -18,7 +18,7 @@ export default function VenueDetails({ onOpenLoginModal }) {
     const fetchVenueData = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`http://localhost:8080/api/venues/${id}`);
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/venues/${id}`);
         
         if (response.ok) {
           const venueFromApi = await response.json();

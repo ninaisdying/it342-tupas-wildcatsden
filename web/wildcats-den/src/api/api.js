@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://localhost:8080/api';
+const API_BASE_URL = process.env.REACT_APP_API_URL;
 
 async function apiCall(endpoint, options = {}) {
   try {
@@ -96,7 +96,7 @@ export const bookingAPI = {
   },
 
   getUserBookings: async (userId) => {
-    const response = await fetch(`http://localhost:8080/api/bookings/user/${userId}`);
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/bookings/user/${userId}`);
     if (!response.ok) {
       throw new Error('Failed to fetch bookings');
     }
@@ -105,7 +105,7 @@ export const bookingAPI = {
   
   // Get bookings for custodian's venues
   getCustodianBookings: async (custodianId) => {
-    const response = await fetch(`http://localhost:8080/api/bookings/custodian/${custodianId}`);
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/bookings/custodian/${custodianId}`);
     if (!response.ok) {
       throw new Error('Failed to fetch custodian bookings');
     }

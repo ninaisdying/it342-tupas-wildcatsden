@@ -38,7 +38,7 @@ export default function VenueOverview() {
 
   const loadVenues = async () => {
     try {
-      const response = await fetch("http://localhost:8080/api/venues");
+      const response = await fetch("${process.env.REACT_APP_API_URL}/venues");
       if (!response.ok) {
         const text = await response.text();
         console.error("Failed to load venues:", response.status, text);
@@ -93,7 +93,7 @@ export default function VenueOverview() {
   // Delete venue
   const deleteVenue = async () => {
     try {
-      await fetch(`http://localhost:8080/api/venues/${deleteVenueId}`, {
+      await fetch(`${process.env.REACT_APP_API_URL}/venues/${deleteVenueId}`, {
         method: "DELETE",
       });
       setShowDeleteModal(false);

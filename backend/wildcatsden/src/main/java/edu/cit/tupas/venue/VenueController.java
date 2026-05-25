@@ -183,7 +183,7 @@ public class VenueController {
             if (imageFile != null && !imageFile.isEmpty()) {
                 // Upload new image
                 String fileName = fileStorageService.storeFile(imageFile);
-                finalImageUrl = "http://localhost:8080/api/files/uploads/" + fileName;
+                finalImageUrl = "${process.env.REACT_APP_API_URL}/files/uploads/" + fileName;
                 System.out.println("✅ Uploaded new image: " + finalImageUrl);
             } else if (imageUrl != null && !imageUrl.trim().isEmpty()) {
                 // Use provided URL
@@ -216,7 +216,7 @@ public class VenueController {
                     if (!file.isEmpty()) {
                         try {
                             String fileName = fileStorageService.storeFile(file);
-                            String galleryImageUrl = "http://localhost:8080/api/files/uploads/" + fileName;
+                            String galleryImageUrl = "${process.env.REACT_APP_API_URL}/files/uploads/" + fileName;
                             galleryImageUrls.add(galleryImageUrl);
                             System.out.println("✅ Added new gallery image: " + galleryImageUrl);
                         } catch (Exception e) {
