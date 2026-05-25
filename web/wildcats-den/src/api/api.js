@@ -1,4 +1,8 @@
-const API_BASE_URL = process.env.REACT_APP_API_URL;
+const API_BASE_URL = process.env.REACT_APP_API_URL || "";
+
+if (!API_BASE_URL) {
+  console.warn('REACT_APP_API_URL is not defined. API calls will use relative paths.');
+}
 
 async function apiCall(endpoint, options = {}) {
   try {
