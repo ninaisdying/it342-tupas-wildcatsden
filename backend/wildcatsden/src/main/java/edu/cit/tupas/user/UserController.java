@@ -26,7 +26,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/users")
-@CrossOrigin(origins = {"http://localhost:3000", "http://localhost:3001"}, allowCredentials = "true")
+@CrossOrigin(origins = {"https://it342-tupas-wildcatsden-1.onrender.com", "http://localhost:3000", "http://localhost:3001"}, allowCredentials = "true")
 public class UserController {
 
     @Autowired
