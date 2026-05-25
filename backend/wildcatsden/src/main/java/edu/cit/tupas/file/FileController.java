@@ -23,7 +23,7 @@ import java.nio.file.Path;
 
 @RestController
 @RequestMapping("/api/files")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "https://it342-tupas-wildcatsden.onrender.com")
 public class FileController {
     
     @Autowired
