@@ -4,7 +4,7 @@ import CustomModal from "../../shared/components/CustomModal";
 import "../styles/ProfileDetails.css";
 
 export default function ProfileDetails() {
-  const { user, isLoading, updateUser } = useContext(UserContext);
+  const { user, isLoading, updateUserPhoto } = useContext(UserContext);
   const [photoFile, setPhotoFile] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
@@ -17,13 +17,15 @@ export default function ProfileDetails() {
     if (!file) return;
 
     if (file.size > 5 * 1024 * 1024) {
-      showErrorModal("File size too large. Maximum size is 5MB.");
+      setErrorMessage("File size too large. Maximum size is 5MB.");
+      setShowErrorModal(true);
       return;
     }
 
     //  file type
     if (!file.type.startsWith('image/')) {
-      showErrorModal("Please select an image file (JPEG, PNG, etc.).");
+      setErrorMessage("Please select an image file (JPEG, PNG, etc.).");
+      setShowErrorModal(true);
       return;
     }
 
@@ -39,15 +41,17 @@ export default function ProfileDetails() {
 
       if (response.ok) {
         const data = await response.json();
-        updateUser({ ...user, profilePhoto: data.photoUrl });
-        showSuccessModal("Profile photo updated successfully!");
+        updateUserPhoto(data.photoUrl);
+        setShowSuccessModal(true);
       } else {
         const errorData = await response.text();
-        showErrorModal(errorData || "Failed to upload photo");
+        setErrorMessage(errorData || "Failed to upload photo");
+        setShowErrorModal(true);
       }
     } catch (error) {
       console.error("Error uploading photo:", error);
-      showErrorModal("Network error. Please try again.");
+      setErrorMessage("Network error. Please try again.");
+      setShowErrorModal(true);
     } finally {
       setIsUploading(false);
       e.target.value = ""; // Reset file input

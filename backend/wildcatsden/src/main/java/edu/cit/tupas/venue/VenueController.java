@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -19,7 +20,7 @@ import org.springframework.http.MediaType;
 
 @RestController
 @RequestMapping("/api/venues")
-@CrossOrigin(origins = "http://localhost:3000", maxAge = 3600, allowCredentials = "true")
+@CrossOrigin(origins = {"http://localhost:3000", "http://localhost:3001"}, maxAge = 3600, allowCredentials = "true")
 public class VenueController {
     
     @Autowired
@@ -183,7 +184,10 @@ public class VenueController {
             if (imageFile != null && !imageFile.isEmpty()) {
                 // Upload new image
                 String fileName = fileStorageService.storeFile(imageFile);
-                finalImageUrl = "${process.env.REACT_APP_API_URL}/files/uploads/" + fileName;
+                finalImageUrl = ServletUriComponentsBuilder.fromCurrentContextPath()
+                        .path("/api/files/uploads/")
+                        .path(fileName)
+                        .toUriString();
                 System.out.println("✅ Uploaded new image: " + finalImageUrl);
             } else if (imageUrl != null && !imageUrl.trim().isEmpty()) {
                 // Use provided URL
@@ -216,7 +220,10 @@ public class VenueController {
                     if (!file.isEmpty()) {
                         try {
                             String fileName = fileStorageService.storeFile(file);
-                            String galleryImageUrl = "${process.env.REACT_APP_API_URL}/files/uploads/" + fileName;
+                            String galleryImageUrl = ServletUriComponentsBuilder.fromCurrentContextPath()
+                                    .path("/api/files/uploads/")
+                                    .path(fileName)
+                                    .toUriString();
                             galleryImageUrls.add(galleryImageUrl);
                             System.out.println("✅ Added new gallery image: " + galleryImageUrl);
                         } catch (Exception e) {

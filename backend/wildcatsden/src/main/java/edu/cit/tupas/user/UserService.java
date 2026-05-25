@@ -29,7 +29,6 @@ public class UserService {
     }
 
     public UserEntity createUser(UserEntity user) {
-        // Always use default password "12345678"
         String defaultPassword = "12345678";
         String encryptedPassword = passwordEncoder.encode(defaultPassword);
         user.setPassword(encryptedPassword);

@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">WildcatsDen</string>
-    <string name="booking_guide">1. Select a venue from the venues screen &#10;2. Click "Book Now" &#10;3. Enter valid Event Details &#10;4. Wait for confirmation from the custodian that your booking is approved or cancelled &#10; &#10;For concerns or inquiries, contact us through our email <u>@wildcatsden-support@gmail.com</u>
-    </string>
+    <string name="booking_guide">
+    <string name="booking_guide">&lt;b&gt;1. Select a Venue&lt;/b&gt;&lt;br/&gt;Select a venue from the venues screen.&lt;br/&gt;&lt;br/&gt;&lt;b&gt;2. Book the Venue&lt;/b&gt;&lt;br/&gt;Click "Book Now".&lt;br/&gt;&lt;br/&gt;&lt;b&gt;3. Enter Event Details&lt;/b&gt;&lt;br/&gt;Enter valid event details.&lt;br/&gt;&lt;br/&gt;&lt;b&gt;4. Wait for Confirmation&lt;/b&gt;&lt;br/&gt;Wait for confirmation from the custodian whether your booking is approved or cancelled.&lt;br/&gt;&lt;br/&gt;&lt;b&gt;Need Help?&lt;/b&gt;&lt;br/&gt;For concerns or inquiries, contact us through our email: &lt;u&gt;wildcatsden-support@gmail.com&lt;/u&gt;</string>
+</string>
 </resources>

@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.HashMap;
 import java.util.List;
@@ -25,7 +26,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/users")
-@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
+@CrossOrigin(origins = {"http://localhost:3000", "http://localhost:3001"}, allowCredentials = "true")
 public class UserController {
 
     @Autowired
@@ -97,7 +98,10 @@ public class UserController {
         try {
             // Upload the file
             String fileName = fileStorageService.storeFile(photoFile);
-            String photoUrl = "${process.env.REACT_APP_API_URL}/files/uploads/" + fileName;
+            String photoUrl = ServletUriComponentsBuilder.fromCurrentContextPath()
+                    .path("/api/files/uploads/")
+                    .path(fileName)
+                    .toUriString();
             
             // Update user's profile photo
             UserEntity user = userService.getUserById(id)
@@ -155,7 +159,10 @@ public class UserController {
             if (photoFile != null && !photoFile.isEmpty()) {
                 // Upload new photo
                 String fileName = fileStorageService.storeFile(photoFile);
-                finalPhotoUrl = "${process.env.REACT_APP_API_URL}/files/uploads/" + fileName;
+                finalPhotoUrl = ServletUriComponentsBuilder.fromCurrentContextPath()
+                        .path("/api/files/uploads/")
+                        .path(fileName)
+                        .toUriString();
                 System.out.println("✅ Uploaded new profile photo: " + finalPhotoUrl);
             } else if (photoUrl != null && !photoUrl.trim().isEmpty()) {
                 // Use provided URL

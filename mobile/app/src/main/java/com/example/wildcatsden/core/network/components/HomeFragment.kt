@@ -48,7 +48,6 @@ class HomeFragment : Fragment() {
 
     private fun initViews(view: View) {
         headerView = view.findViewById(R.id.headerView)
-        eventsRecyclerView = view.findViewById(R.id.recyclerViewEvents)
         venueCarouselRecyclerView = view.findViewById(R.id.recyclerViewVenueCarousel)
         btnFindVenue = view.findViewById(R.id.btnFindVenue)
     }

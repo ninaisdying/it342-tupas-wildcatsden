@@ -9,6 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.util.Map;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,7 +24,7 @@ import java.nio.file.Path;
 
 @RestController
 @RequestMapping("/api/files")
-@CrossOrigin(origins = "https://it342-tupas-wildcatsden.onrender.com")
+@CrossOrigin(origins = {"https://it342-tupas-wildcatsden.onrender.com", "http://localhost:3000", "http://localhost:3001"})
 public class FileController {
     
     @Autowired
@@ -122,8 +123,11 @@ public class FileController {
             // Store the file
             String fileName = fileStorageService.storeFile(file);
             
-            // Construct the full URL
-            String fileUrl = "${process.env.REACT_APP_API_URL}/files/uploads/" + fileName;
+            // Construct the full URL using the current request context
+            String fileUrl = ServletUriComponentsBuilder.fromCurrentContextPath()
+                    .path("/api/files/uploads/")
+                    .path(fileName)
+                    .toUriString();
             
             System.out.println("✅ File uploaded successfully: " + fileName);
             System.out.println("📁 File URL: " + fileUrl);
