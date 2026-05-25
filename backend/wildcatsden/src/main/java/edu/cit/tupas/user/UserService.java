@@ -48,6 +48,7 @@ public class UserService {
         user.setUserType(userDetails.getUserType());
         user.setAbout(userDetails.getAbout());
         user.setLocation(userDetails.getLocation());
+        user.setWork(userDetails.getWork());
         
         // Update profile photo if provided
         if (userDetails.getProfilePhoto() != null) {

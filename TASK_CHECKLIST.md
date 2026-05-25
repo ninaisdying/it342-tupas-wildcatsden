@@ -15,8 +15,6 @@ Mobile Login Page
 Mobile Register Page
 Mobile database connection
 Mobile Logout functionality
-
-IN-PROGRESS:
 Mobile Dashboard/Profile page (protected)
 
 

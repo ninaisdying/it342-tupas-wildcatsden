@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"}, ignoreUnknown = true)
 public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,6 +18,7 @@ public class UserEntity {
     private String password;
     private String about;
     private String location;
+    private String work;
     private boolean firstLogin = true; 
     private String profilePhoto;
 
@@ -35,8 +36,10 @@ public void setProfilePhoto(String profilePhoto) {
     
     public String getLocation() { return location; }
     public void setLocation(String location) { this.location = location; }
-    
 
+    public String getWork() { return work; }
+    public void setWork(String work) { this.work = work; }
+    
     public String getName() {
         return firstName + " " + lastName;
     }
