@@ -1,231 +1,463 @@
-# WildcatsDEN — IT342 Tupas Project
+# WildcatsDEN — IT342 Tupas 
 
-> Full-stack booking and venue management application used for the IT342 course.
+**IT342-G5 | Systems Integration and Architecture 1**
 
----
-
-**Project summary**: WildcatsDEN is a Java Spring Boot backend with a React frontend (and an Android mobile module). It provides authentication, user profiles (including photo upload), venue listing and booking management.
-
-**Tech stack**
-- **Backend**: Java, Spring Boot, Spring Web, Spring Data JPA, PostgreSQL
-- **Frontend**: React (create-react-app), JavaScript
-- **Mobile**: Android (Gradle / Kotlin or Java; module at `mobile/app`)
-- **Storage**: Local file uploads (served from `uploads/`), PostgreSQL (configured in `application.properties`)
+WildcatsDEN is a web and mobile-based venue booking and management system designed for CIT-U students, faculty, and event organizers. The platform allows users to browse venues, check availability, and manage reservations efficiently while giving administrators and custodians complete venue and booking management tools.
 
 ---
 
-**Repository layout (top-level)**
-- `backend/wildcatsden/` — Spring Boot backend
-- `web/wildcats-den/` — React frontend
-- `mobile/` — Android mobile application
-- `uploads/` — runtime uploaded files (created at runtime)
+## Overview
+
+WildcatsDEN consists of:
+
+* A Spring Boot REST API backend
+* A React-based web frontend
+* An Android mobile application
+* PostgreSQL database integration
+* JWT authentication and authorization
+
+The system supports venue management, booking workflows, file uploads, and user profile management.
 
 ---
 
-**Quick start — prerequisites**
-- Java 17+ and Maven (for backend)
-- Node 16+ and npm (for frontend)
-- Android Studio for mobile (optional)
+## Features
 
-**Run backend locally**
-1. Open terminal in `backend/wildcatsden`
-2. Build and run using the included wrapper:
+### User Features
 
-```powershell
-cd backend/wildcatsden
-.\\mvnw.cmd spring-boot:run
+* Secure registration and login
+* Browse and search available venues
+* View venue details and availability
+* Book venues
+* View booking history
+* Cancel bookings
+* Upload and update profile photos
+* Secure logout
+
+### Admin Features
+
+* Add, update, view, and delete venues
+* Add, update, view, and delete users
+* Manage bookings
+* Approve or decline booking requests
+
+### Custodian Features
+
+* View assigned venues
+* Manage booking requests
+* Access profile information
+
+---
+
+## Tech Stack
+
+### Backend
+
+* Java 17
+* Spring Boot
+* Spring Web
+* Spring Data JPA
+* PostgreSQL
+* JWT Authentication
+
+### Frontend
+
+* React
+* JavaScript
+* Create React App
+
+### Mobile
+
+* Android Studio
+* Gradle
+* Kotlin / Java
+
+### Storage
+
+* PostgreSQL Database
+* Local File Upload Storage
+
+---
+
+## Project Structure
+
+```text
+WildcatsDEN/
+│
+├── backend/wildcatsden/     # Spring Boot backend
+├── web/wildcats-den/        # React frontend
+├── mobile/                  # Android application
+├── uploads/                 # Runtime uploaded files
+│
+└── README.md
 ```
 
-or build then run:
+---
+
+## System Architecture
+
+```text
+Frontend (React / Android)
+            │
+            ▼
+     Spring Boot REST API
+            │
+            ▼
+       PostgreSQL Database
+```
+
+---
+
+## Prerequisites
+
+Before running the project, make sure the following are installed:
+
+* Java 17+
+* Maven
+* Node.js 16+
+* npm
+* PostgreSQL
+* Android Studio 
+
+---
+
+# Installation
+
+## Clone the Repository
+
+```bash
+git clone https://github.com/NinaIsDying/IT342-Tupas-WildcatsDEN.git
+cd IT342-Tupas-WildcatsDEN
+```
+
+---
+
+## Backend Setup
+
+Navigate to the backend directory:
+
+```bash
+cd backend/wildcatsden
+```
+
+### Configure the Database
+
+Edit:
+
+```text
+src/main/resources/application.properties
+```
+
+Update your PostgreSQL configuration and upload directory settings.
+
+Example:
+
+```properties
+spring.datasource.url=jdbc:postgresql://localhost:5432/wildcatsden
+spring.datasource.username=postgres
+spring.datasource.password=your_password
+
+file.upload-dir=uploads
+```
+
+---
+
+## Run the Backend
+
+### Using Maven Wrapper
+
+#### Windows
 
 ```powershell
-.\\mvnw.cmd -DskipTests package
+.\mvnw.cmd spring-boot:run
+```
+
+#### Linux / macOS
+
+```bash
+./mvnw spring-boot:run
+```
+
+### Build and Run JAR
+
+```bash
+./mvnw clean package -DskipTests
 java -jar target/*.jar
 ```
 
-Configuration: edit `backend/wildcatsden/src/main/resources/application.properties` for the database and upload dir (`file.upload-dir`).
+---
 
-**Run frontend locally**
-1. Open terminal in `web/wildcats-den`
-2. Install and start:
+## Frontend Setup
+
+Navigate to the frontend directory:
 
 ```bash
 cd web/wildcats-den
+```
+
+Install dependencies:
+
+```bash
 npm install
+```
+
+Run the frontend:
+
+```bash
 npm start
 ```
 
-Environment: set `REACT_APP_API_URL` in `web/wildcats-den/.env` to point to your backend root (example: `http://localhost:8080/api` or deployed backend `https://it342-tupas-wildcatsden-1.onrender.com/api`).
+---
 
-**Mobile (Android)**
-- See `mobile/` for the Android project. Open in Android Studio and configure `local.properties` / build flags as needed.
+## Mobile Application Setup
+
+Open the `mobile/` directory using Android Studio.
+
+Configure:
+
+* `local.properties`
+* SDK paths
+* Build configurations
+
+Then sync the Gradle project and run the application.
 
 ---
 
-**Environment variables & important files**
-- Frontend `.env`: `web/wildcats-den/.env` — `REACT_APP_API_URL` (must include protocol and `/api` suffix if used by the client)
-- Backend config: `backend/wildcatsden/src/main/resources/application.properties`
-- File serving: `backend/wildcatsden/src/main/java/edu/cit/tupas/file/FileController.java` (serves `/api/files/uploads/{fileName}`)
-- User API: `backend/wildcatsden/src/main/java/edu/cit/tupas/user/UserController.java` (endpoints for users and profile photo uploads)
+## Environment Variables
+
+### Frontend
+
+File:
+
+```text
+web/wildcats-den/.env
+```
+
+Variable:
+
+```env
+REACT_APP_API_URL=http://localhost:8080/api
+```
 
 ---
 
-**Key API endpoints (examples)**
+## Important Backend Files
 
-- Auth
-  - POST `/api/auth/signin` — sign in (JSON body: `{ "email":"...","password":"..." }`)
-  - POST `/api/auth/signup` — register
+### Application Configuration
 
-- Users
-  - GET `/api/users/{id}` — fetch a user
-  - PUT `/api/users/{id}` — update user JSON
-  - PUT `/api/users/{id}/profile-photo` — upload profile photo (multipart/form-data with `photo` field)
+```text
+backend/wildcatsden/src/main/resources/application.properties
+```
+---
 
-- Files
-  - GET `/api/files/uploads/{fileName}` — serve uploaded file
-  - POST `/api/files/upload` — generic file upload (returns `fileUrl` and `fileName`)
+# API Endpoints
 
-- Venues & Bookings
-  - GET `/api/venues` — list venues
-  - PUT `/api/venues/{id}` — update venue (multipart support available in controller)
-  - Bookings endpoints live under `/api/bookings` (see code for details)
+## Authentication
 
-Examples (curl)
+### Sign In
 
-Upload profile photo:
+```http
+POST /api/auth/signin
+```
+
+Request Body:
+
+```json
+{
+  "email": "user@email.com",
+  "password": "password"
+}
+```
+
+### Sign Up
+
+```http
+POST /api/auth/signup
+```
+
+---
+
+## Users
+
+### Get User
+
+```http
+GET /api/users/{id}
+```
+
+### Update User
+
+```http
+PUT /api/users/{id}
+```
+
+### Upload Profile Photo
+
+```http
+PUT /api/users/{id}/profile-photo
+```
+
+Content-Type:
+
+```text
+multipart/form-data
+```
+
+Field:
+
+```text
+photo
+```
+
+---
+
+## Files
+
+### Upload File
+
+```http
+POST /api/files/upload
+```
+
+### Get Uploaded File
+
+```http
+GET /api/files/uploads/{fileName}
+```
+
+---
+
+## Venues
+
+### Get All Venues
+
+```http
+GET /api/venues
+```
+
+### Update Venue
+
+```http
+PUT /api/venues/{id}
+```
+
+---
+
+## Bookings
+
+Booking-related endpoints are available under:
+
+```http
+/api/bookings
+```
+
+---
+
+# Example Requests
+
+## Upload Profile Photo
 
 ```bash
 curl -X PUT \
   -F "photo=@/path/to/photo.jpg" \
-  "$REACT_APP_API_URL/users/123/profile-photo"
+  "http://localhost:8080/api/users/123/profile-photo"
 ```
 
-Fetch an uploaded file:
+---
+
+## Fetch Uploaded File
 
 ```bash
-curl "http://localhost:8080/api/files/uploads/2026-05-25-...jpg"
+curl "http://localhost:8080/api/files/uploads/sample.jpg"
 ```
 
 ---
 
-**File upload & profile-photo flow (summary)**
-1. Frontend sends `multipart/form-data` `PUT` to `/api/users/{id}/profile-photo` with form field `photo`.
-2. Backend `UserController.uploadProfilePhoto(...)` receives a `MultipartFile` and calls `fileStorageService.storeFile(...)`.
-3. File is saved to the configured upload directory; backend constructs a public file URL using the current request context and stores that URL on the user record (`user.setProfilePhoto(photoUrl)`), then persists the user.
-4. Backend returns `{ message, photoUrl, user }` and frontend updates the cached user state so the new photo displays immediately.
+# File Upload Flow
 
----
+1. Frontend sends a `multipart/form-data` request to:
 
-**CORS & deployed frontend on Render**
-- If your frontend is deployed on Render (example: `https://it342-tupas-wildcatsden.onrender.com`) you must:
-  - Set `REACT_APP_API_URL` to your deployed backend (example: `https://it342-tupas-wildcatsden-1.onrender.com/api`) in the Render environment variables for the frontend service.
-  - Ensure backend controllers allow that origin in their `@CrossOrigin` annotation or configure global CORS.
-
-Common CORS error:
-
-```
-Access to fetch at 'http://localhost:8080/api/auth/signin' from origin 'https://it342-tupas-wildcatsden.onrender.com' has been blocked by CORS policy
+```http
+PUT /api/users/{id}/profile-photo
 ```
 
-This typically means the frontend is calling `localhost` while running on Render (wrong API URL) or the backend hasn't allowed the deployed origin.
+2. The backend receives the uploaded file using `MultipartFile`.
+
+3. The file is stored in the configured upload directory.
+
+4. The backend generates a public file URL.
+
+5. The user's `profilePhoto` field is updated and saved.
+
+6. The frontend refreshes the user state and displays the updated profile photo.
 
 ---
 
-**Troubleshooting**
-- CORS: verify `REACT_APP_API_URL` and backend `@CrossOrigin` values. Restart backend after changing CORS settings.
-- File not found after upload: check `uploads/` directory exists and that `FileController.serveFile` can access it. Verify `spring.web.resources.static-locations` includes `file:./uploads/` in `application.properties`.
-- Cached images: browsers sometimes cache an old image — do a hard reload/clear cache or add a query string to the image URL.
-- Server logs: check backend console for upload logs (controllers print successful upload lines).
+# Deployment Notes
 
+## Frontend
+
+The frontend is deployed in: 
+
+* Render
+``
+https://it342-tupas-wildcatsden.onrender.com
+``
+
+## Backend
+
+The backend is deployed in: 
+
+* Render
+``
+https://it342-tupas-wildcatsden-1.onrender.com
+``
 ---
 
-**Deployment notes**
-- Backend on Render (example)
-  - Create a Render Web Service, point to `backend/wildcatsden` as the root (use the packaged jar or let Render run `./mvnw.cmd`), expose port 8080.
-  - Set required environment variables (database connection, etc.).
+# Contributing
 
-- Frontend on Render
-  - Create a Static Site or Web Service from `web/wildcats-den`.
-  - Add environment variable `REACT_APP_API_URL=https://<your-backend>/api` in Render dashboard before deploy.
-
----
-
-**Development tips & notes**
-- Keep `REACT_APP_API_URL` out of final client-side commits that point to localhost when deploying — use the Render dashboard env vars.
-- For local testing, prefer `http://localhost:8080/api`.
-
----
-
-**Contributing**
-- Fork the repo, create a feature branch, and open a pull request. Describe the change and reference issues.
-
-**License**
-- Add your preferred license file (`LICENSE`) at repo root. If none is present, the project is not licensed for public use.
-
----
-
-If you want, I can also:
-- add CI scripts for building and deploying to Render
-- add a short `docker-compose` to run backend + database locally
-- create a short CONTRIBUTING.md and CODE_OF_CONDUCT
-#  Wildcat’s DEN
-
-**IT342-G5 | Systems Integration and Architecture 1**
-
-Wildcat’s DEN is a web and mobile-based venue booking and management system designed for CIT-U students, faculty, and event organizers. It allows users to browse venues, check availability, and book spaces efficiently while providing administrators and custodians tools to manage venues and bookings.
-
----
-
-##  Features
-
-###  User Features
-- Register and login securely
-- Browse and search available venues
-- View venue details (capacity, description, availability)
-- Book venues
-- View booking history
-- Cancel bookings
-- Logout securely
-
-###  Admin Features
-- Manage venues (add, update, delete)
-- Manage bookings
-- Approve or decline booking requests
-- Monitor system usage
-
-###  Custodian Features
-- View assigned venue
-- View booking requests
-- Respond to inquiries
-- Access profile information
-
----
-
-##  System Architecture
-
-- **Frontend:** React (Web)
-- **Backend:** Spring Boot (REST API)
-- **Database:** PostgreSQL
-- **Authentication:** JWT-based security
-
----
-
-
-## ⚙️ Installation
+1. Fork the repository
+2. Create a feature branch
 
 ```bash
-# Clone repository
-git clone [https://github.com/your-username/wildcats-den.git](https://github.com/NinaIsDying/IT342-Tupas-WildcatsDEN]
+git checkout -b feature/feature-name
+```
 
-# IMPORTANT! 
-# Go to /backend/wildcatsden/src/main/java/edu/cit/tupas and run WildcatsdenApplication.java
+3. Commit changes
 
-# Navigate to project
-cd web
-cd wildcats-den
+```bash
+git commit -m "feat: add new feature"
+```
 
-# Install dependencies (frontend)
-npm install
+4. Push to your branch
 
-# Run frontend
-npm start
+```bash
+git push origin feature/feature-name
+```
+
+5. Open a Pull Request
+
+---
+
+# Commit Convention
+
+This project follows the Conventional Commits specification.
+
+Format:
+
+```text
+<type>[optional scope]: <description>
+```
+
+Examples:
+
+```text
+feat(auth): add JWT authentication
+fix(booking): resolve duplicate booking issue
+docs(readme): update installation guide
+```
+
+---
+
+# License
+
+This project is developed for academic purposes under the IT342 course at Cebu Institute of Technology - University.
